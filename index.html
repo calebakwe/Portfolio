@@ -4,7 +4,23 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Caleb Akwesera Ndiwa — Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<meta name="description" content="Caleb Akwesera Ndiwa — Graduate Engineer (EBK B25994), Nairobi, Kenya. Water systems, WASH, environmental safeguards and structural assessment for the World Bank, UNHCR, Concern Worldwide and government agencies."/>
+<meta name="theme-color" content="#0b0e09"/>
+<meta name="color-scheme" content="dark"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Caleb Akwesera Ndiwa — Engineer &amp; Consultant"/>
+<meta property="og:description" content="Water systems, WASH, environmental safeguards and structural assessment across East Africa."/>
+<meta property="og:url" content="https://calebakwe.github.io/Portfolio/"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0e09'/%3E%3Ctext x='29' y='45' font-family='Arial,sans-serif' font-weight='800' font-size='38' fill='%23eae6de' text-anchor='middle'%3EC%3C/text%3E%3Ccircle cx='48' cy='42' r='5' fill='%23b9f56b'/%3E%3C/svg%3E"/>
+<!-- Fonts: DM Sans + Instrument Serif come from Google Fonts. Cabinet Grotesk is NOT a Google font
+     (it is distributed by Fontshare), so it is loaded separately — requesting it from Google broke the font request. -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"/>
 <style>
 /* ── TOKENS ── */
 :root{
@@ -25,19 +41,24 @@
   --purple:#b06af5;
   --r:10px;
   --gap:1rem;
+  --nav-h:62px;            /* height of the fixed nav; JS keeps it exact */
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:auto;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;cursor:none;}
-a,button,input,textarea,select,[role="button"]{cursor:none;}
+html{scroll-behavior:auto;scroll-padding-top:calc(var(--nav-h) + 12px);-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;}
+@supports(overflow:clip){html,body{overflow-x:clip;}}
+img,svg{max-width:100%;}
 
-/* ── CURSOR ── */
-#dot,#ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);}
-#dot{position:fixed;top:0;left:0;pointer-events:none;z-index:10000;border-radius:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:var(--accent);transition:width .25s,height .25s,background .25s,border .25s;}
-#ring{width:34px;height:34px;border:1.5px solid rgba(185,245,107,.38);z-index:9998;transition:transform .38s cubic-bezier(.25,.46,.45,.94);}
+/* ── CURSOR (desktop mouse only — enabled by JS via html.has-cursor) ── */
+#dot,#ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);opacity:0;display:none;}
+#dot{z-index:10000;width:8px;height:8px;background:var(--accent);transition:width .25s,height .25s,background .25s,border .25s,opacity .2s;}
+#ring{width:34px;height:34px;border:1.5px solid rgba(185,245,107,.38);z-index:9998;transition:opacity .2s;}
+html.has-cursor #dot,html.has-cursor #ring{display:block;}
+html.has-cursor body,html.has-cursor a,html.has-cursor button,html.has-cursor [role="button"]{cursor:none;}
+html.has-cursor input,html.has-cursor textarea{cursor:text;}
+html.cursor-on #dot,html.cursor-on #ring{opacity:1;}
 .hovering #dot{width:44px;height:44px;background:rgba(185,245,107,.1);border:1.5px solid var(--accent);}
-.hovering #ring{opacity:0;}
-@media(pointer:coarse){#dot,#ring{display:none;}body,a,button,input,textarea,select{cursor:auto;}}
+html.cursor-on body.hovering #ring{opacity:0;}
 /* ── SKIP LINK ── */
 .skip-link{position:absolute;top:-9999px;left:1rem;z-index:10000;background:var(--accent);color:var(--bg);padding:.55rem 1.2rem;border-radius:4px;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:.8rem;text-decoration:none;}
 .skip-link:focus{top:1rem;}
@@ -48,8 +69,12 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;transition:background .35s,border-color .35s;border-bottom:1px solid transparent;}
-nav.on{background:rgba(11,14,9,.93);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-color:var(--bdr);}
+nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;transition:border-color .35s;border-bottom:1px solid transparent;}
+/* The blur lives on a pseudo-element: a backdrop-filter on <nav> itself turns it into the containing
+   block for position:fixed children, which trapped the mobile menu inside the 60px bar. */
+nav::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;z-index:-1;background:rgba(11,14,9,.93);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;transition:opacity .35s;pointer-events:none;}
+nav.on{border-color:var(--bdr);}
+nav.on::before{opacity:1;}
 .nav-logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:.95rem;color:var(--txt);text-decoration:none;letter-spacing:-.01em;}
 .nav-logo b{color:var(--accent);}
 .nav-links{display:flex;gap:2rem;list-style:none;}
@@ -102,7 +127,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .b-reg{grid-column:3/4;grid-row:4/5;}
 
 .bcard{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:1.6rem 1.8rem;transition:border-color .28s,transform .28s;}
-.bcard:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+@media (hover:hover){.bcard:hover{border-color:var(--bdr2);transform:translateY(-2px);}}
 .bcard.green-glow{border-color:rgba(185,245,107,.18);background:rgba(185,245,107,.035);}
 .btag{font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;letter-spacing:.17em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.75rem;}
 .bmain-title{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(1.5rem,2.2vw,2rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--txt);margin-bottom:.7rem;}
@@ -144,9 +169,12 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .filter-row{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:2rem;}
 .fb{padding:.42rem 1rem;border:1px solid var(--bdr2);background:transparent;color:var(--muted);font-family:'Cabinet Grotesk',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.07em;border-radius:4px;transition:all .18s;}
 .fb.on,.fb:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);}
-.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);}
+.proj-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);}
+.pcard-wide{grid-column:1/-1;}
+/* the tall hydrogeology card sits beside the three short cards on 2-column layouts */
+.pcard-tall{grid-row:span 3;}
 .pcard{opacity:1;background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;transition:opacity .32s ease,border-color .25s,transform .3s ease;}
-.pcard:hover{border-color:var(--bdr2);transform:translateY(-3px);}
+@media (hover:hover){.pcard:hover{border-color:var(--bdr2);transform:translateY(-3px);}}
 .pcard[hidden]{display:none;}
 .pbar{height:3px;}
 .pbar.water{background:linear-gradient(90deg,var(--teal),var(--blue));}
@@ -187,7 +215,8 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 
 /* ── TIMELINE ── */
 .tl{display:flex;flex-direction:column;}
-.ti{display:grid;grid-template-columns:185px 1fr;gap:1.8rem;padding:1.8rem 0;border-bottom:1px solid var(--bdr);opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;}
+.ti{display:grid;grid-template-columns:185px minmax(0,1fr);gap:1.8rem;padding:1.8rem 0;border-bottom:1px solid var(--bdr);transition:opacity .5s ease,transform .5s ease;}
+.js .ti:not(.show){opacity:0;transform:translateY(12px);}
 .ti:last-child{border-bottom:none;}
 .ti.show{opacity:1;transform:none;}
 .ti-date{font-family:'Cabinet Grotesk',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;padding-top:.15rem;}
@@ -198,7 +227,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .ti-pill{font-size:.62rem;padding:.22rem .65rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:rgba(234,230,222,.7);border-radius:4px;font-family:'Cabinet Grotesk',sans-serif;font-weight:500;}
 
 /* ── RESEARCH ── */
-.research-wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;}
+.research-wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2rem;}
 .r-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:2.2rem;position:relative;}
 .r-badge{position:absolute;top:1.2rem;right:1.2rem;font-family:'Cabinet Grotesk',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .65rem;background:rgba(176,106,245,.1);border:1px solid rgba(176,106,245,.25);color:var(--purple);border-radius:3px;}
 .r-icon{font-size:2.2rem;margin-bottom:1rem;}
@@ -206,8 +235,9 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .r-inst{font-size:.73rem;color:var(--dim);margin-bottom:.9rem;}
 .r-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
 .r-list{list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:.45rem;}
-.r-list li{font-size:.78rem;color:var(--muted);display:flex;gap:.55rem;line-height:1.5;}
-.r-list li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:.05rem;}
+/* block + absolutely-placed arrow: a flex <li> split "using <strong>ANSYS</strong> and…" into separate columns */
+.r-list li{font-size:.78rem;color:var(--muted);line-height:1.5;position:relative;padding-left:1.25rem;}
+.r-list li::before{content:'→';color:var(--accent);position:absolute;left:0;top:0;}
 .r-meta{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;}
 .r-mi{display:flex;flex-direction:column;gap:.25rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--bdr);}
 .r-mi:last-child{border-bottom:none;}
@@ -217,7 +247,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 /* ── TRAINING ── */
 .train-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--gap);}
 .tcard{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:1.35rem 1.6rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .25s,transform .25s;}
-.tcard:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+@media (hover:hover){.tcard:hover{border-color:var(--bdr2);transform:translateY(-2px);}}
 .t-logo{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .t-org{font-family:'Cabinet Grotesk',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-bottom:.18rem;}
 .t-title{font-size:.83rem;color:var(--txt);font-weight:500;line-height:1.32;margin-bottom:.22rem;}
@@ -228,7 +258,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:var(--gap);}
 .ecard{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:1.7rem;transition:border-color .25s,transform .25s;position:relative;overflow:hidden;}
 .ecard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.ecard:hover{border-color:var(--bdr2);transform:translateY(-3px);}
+@media (hover:hover){.ecard:hover{border-color:var(--bdr2);transform:translateY(-3px);}}
 .ecard:hover::after{transform:scaleX(1);}
 .eg::after{background:var(--accent);}
 .et::after{background:var(--teal);}
@@ -242,7 +272,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 /* ── CLIENTS ── */
 .clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:var(--gap);}
 .clicard{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);padding:1.3rem 1.5rem;display:flex;gap:.9rem;align-items:flex-start;transition:border-color .25s,transform .25s;}
-.clicard:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+@media (hover:hover){.clicard:hover{border-color:var(--bdr2);transform:translateY(-2px);}}
 .cli-ico{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid transparent;}
 .cli-name{font-family:'Cabinet Grotesk',sans-serif;font-size:.83rem;font-weight:700;color:var(--txt);line-height:1.25;margin-bottom:.2rem;}
 .cli-type{font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700;font-family:'Cabinet Grotesk',sans-serif;margin-bottom:.35rem;}
@@ -261,7 +291,7 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
 .contact-tagline strong{font-family:'Cabinet Grotesk',sans-serif;font-style:normal;font-weight:800;color:var(--accent);}
 .clinks{display:flex;flex-direction:column;gap:.7rem;margin-top:1.8rem;}
 .clink{display:flex;align-items:center;gap:.9rem;color:var(--muted);text-decoration:none;font-size:.86rem;padding:.85rem 1rem;background:var(--surf);border:1px solid var(--bdr);border-radius:7px;transition:border-color .2s,color .2s,transform .18s;}
-.clink:hover{border-color:var(--accent);color:var(--accent);transform:translateX(4px);}
+@media (hover:hover){.clink:hover{border-color:var(--accent);color:var(--accent);transform:translateX(4px);}}
 .clink-ic{width:30px;height:30px;background:rgba(255,255,255,.04);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;}
 .avail-tag{display:flex;align-items:center;gap:.5rem;padding:.55rem .9rem;background:rgba(185,245,107,.06);border:1px solid rgba(185,245,107,.2);border-radius:6px;margin-bottom:1.4rem;font-size:.72rem;color:var(--accent);font-family:'Cabinet Grotesk',sans-serif;font-weight:700;}
 .adot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
@@ -293,10 +323,10 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 /* Shared glass transition base */
 .bcard, .pcard, .tcard, .ecard, .clicard, .r-card,
 .srv, .clink, .mbadge, .stag {
-  transition: border-color .3s, transform .3s, background .3s,
+  transition: opacity .4s ease, border-color .3s, transform .3s, background .3s,
               box-shadow .3s, backdrop-filter .3s;
-  will-change: transform;
 }
+@media (hover:hover) {
 
 /* Bento about cards */
 .bcard:hover {
@@ -401,6 +431,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   -webkit-backdrop-filter: blur(10px);
   box-shadow: inset 0 1px 0 rgba(185,245,107,.07);
 }
+} /* end @media (hover:hover) */
 
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){
@@ -413,14 +444,13 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   .b-loc{grid-column:auto;grid-row:auto;}
   .b-reg{grid-column:1/3;grid-row:auto;}
   .srv-grid{grid-template-columns:1fr 1fr;}
-  .skills-cols,.research-wrap,.contact-cols{grid-template-columns:1fr;}
-  .ti{grid-template-columns:1fr;}
+  .skills-cols,.research-wrap,.contact-cols{grid-template-columns:minmax(0,1fr);}
+  .ti{grid-template-columns:minmax(0,1fr);}
 }
 @media(max-width:760px){
   .bento-wrap{grid-template-columns:1fr;}
-  .b-photo{grid-column:auto;grid-row:auto;height:260px;}
+  .b-photo{grid-column:auto;grid-row:auto;}
   .b-main,.b-role,.b-s1,.b-s2,.b-s3,.b-loc,.b-reg{grid-column:auto;grid-row:auto;}
-  .wb-stats{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:600px){
   nav{padding:.85rem 1.2rem;}
@@ -429,7 +459,6 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   h1.hero-name{font-size:3rem;}
   .hero-foot{flex-direction:column;gap:1.5rem;align-items:flex-start;}
   .bento-wrap{grid-template-columns:1fr;}
-  .b-photo{height:220px;}
   .b-main,.b-role,.b-reg{grid-column:auto;}
   .srv-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:.4rem;text-align:center;}
@@ -440,15 +469,15 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 /* ── PHOTO BENTO ── */
 .photo-frame{width:100%;height:100%;min-height:340px;border-radius:6px;overflow:hidden;position:relative;display:flex;}
 .photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center 12%;filter:grayscale(100%) contrast(1.12) brightness(0.9);transition:filter .45s ease,transform .45s ease;}
-.photo-frame:hover img{filter:grayscale(50%) contrast(1.05) brightness(0.97);transform:scale(1.025);}
+@media (hover:hover){.photo-frame:hover img{filter:grayscale(50%) contrast(1.05) brightness(0.97);transform:scale(1.025);}}
 .photo-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 52%,rgba(11,14,9,.65) 100%),linear-gradient(145deg,rgba(185,245,107,.07) 0%,transparent 45%);pointer-events:none;}
 
 /* ── WB PROJECT CARD ── */
 .wb-card{background:var(--surf);border:1px solid rgba(106,171,245,.22);border-radius:var(--r);overflow:hidden;transition:border-color .28s,transform .28s;}
-.wb-card:hover{border-color:rgba(106,171,245,.45);transform:translateY(-3px);}
+@media (hover:hover){.wb-card:hover{border-color:rgba(106,171,245,.45);transform:translateY(-3px);}}
 .wb-map{height:200px;background:var(--bg);position:relative;overflow:hidden;border-bottom:1px solid rgba(106,171,245,.15);}
 .wb-map svg{width:100%;height:100%;}
-.wb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);margin:1rem 0 .8rem;}
+.wb-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);margin:1rem 0 .8rem;}
 .wb-stat{padding:.65rem .8rem;text-align:center;border-right:1px solid var(--bdr);}
 .wb-stat:last-child{border-right:none;}
 .wb-stat-n{font-family:'Cabinet Grotesk',sans-serif;font-size:1.15rem;font-weight:800;color:var(--blue);line-height:1;}
@@ -456,7 +485,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 .wb-demand-bar{margin:.4rem 0;}
 .wb-bar-wrap{background:var(--surf2);border-radius:2px;height:4px;overflow:hidden;margin-top:.3rem;}
 .wb-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--teal));}
-.wb-demand-lbl{display:flex;justify-content:space-between;font-size:.6rem;color:var(--dim);}
+.wb-demand-lbl{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.2rem .75rem;font-size:.6rem;color:var(--dim);}
 
 /* ── Concern Worldwide Multi-Site Panel ── */
 .ti-concern{border-left-color:var(--teal) !important;background:rgba(78,205,196,.025);}
@@ -503,36 +532,47 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   .bento-wrap{grid-template-columns:minmax(0,1fr) minmax(0,2fr);grid-template-rows:auto;}
   .b-photo{grid-column:1/2;grid-row:1/2;}
   .b-main{grid-column:2/3;grid-row:1/2;}
-  .b-role{grid-column:1/2;grid-row:2/3;}
+  /* tall "Current Roles" card beside two stacked stat cards (the stats were stretched to its height) */
+  .b-role{grid-column:1/2;grid-row:2/4;}
   .b-s1{grid-column:2/3;grid-row:2/3;}
-  .b-s2{grid-column:1/2;grid-row:3/4;}
-  .b-s3{grid-column:2/3;grid-row:3/4;}
-  .b-loc{grid-column:1/2;grid-row:4/5;}
-  .b-reg{grid-column:2/3;grid-row:4/5;}
-  .research-wrap{grid-template-columns:1fr;}
+  .b-s2{grid-column:2/3;grid-row:3/4;}
+  .b-s3{grid-column:1/2;grid-row:4/5;}
+  .b-loc{grid-column:2/3;grid-row:4/5;}
+  .b-reg{grid-column:1/3;grid-row:5/6;}
+  .research-wrap{grid-template-columns:minmax(0,1fr);}
   .skills-cols{gap:2rem;}
   .contact-cols{gap:2.5rem;}
 }
 
 /* ══════════════════════════════════════════════════
-   RESPONSIVE — Mobile (≤768px)
+   NAV — hamburger menu up to 900px (phones + portrait tablets)
 ══════════════════════════════════════════════════ */
-@media(max-width:768px){
-  /* Nav */
+@media(max-width:900px){
+  nav{padding:.9rem 1.4rem;}
   .nav-links{
     display:none;
     position:fixed;top:0;left:0;right:0;bottom:0;
-    flex-direction:column;align-items:center;justify-content:center;
-    gap:2rem;background:rgba(11,14,9,.97);
+    flex-direction:column;align-items:center;justify-content:flex-start;
+    gap:.35rem;padding:calc(var(--nav-h) + 1rem) 1.5rem 2rem;
+    overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+    background:rgba(11,14,9,.97);
     backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
     z-index:850;list-style:none;
   }
   .nav-links.open{display:flex;}
-  .nav-links a{font-size:1.1rem;letter-spacing:.08em;}
+  /* auto margins centre the list when it fits and let it scroll (instead of clipping) on short screens */
+  .nav-links li:first-child{margin-top:auto;}
+  .nav-links li:last-child{margin-bottom:auto;}
+  .nav-links a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 1.25rem;font-size:1.1rem;letter-spacing:.08em;}
   .nav-hire{display:none;}
   .nav-hamburger{display:flex;}
-  nav{padding:.9rem 1.4rem;}
+}
+html.menu-open,html.menu-open body{overflow:hidden;}
 
+/* ══════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤768px)
+══════════════════════════════════════════════════ */
+@media(max-width:768px){
   /* Hero */
   #hero{padding:6rem 1.4rem 3.5rem;}
   .hero-foot{flex-direction:column;gap:1.6rem;align-items:flex-start;}
@@ -552,8 +592,8 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   .srv-grid{grid-template-columns:1fr;}
 
   /* Projects */
-  .proj-grid{grid-template-columns:1fr;}
-  .pcard[style*="grid-column:span 2"]{grid-column:span 1 !important;}
+  .proj-grid{grid-template-columns:minmax(0,1fr);}
+  .pcard-wide,.pcard-tall{grid-column:auto;grid-row:auto;}
   .filter-row{gap:.35rem;}
   .fb{font-size:.65rem;padding:.38rem .8rem;}
 
@@ -567,10 +607,10 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   .ti-role{font-size:.9rem;}
 
   /* Research */
-  .research-wrap{grid-template-columns:1fr;}
+  .research-wrap{grid-template-columns:minmax(0,1fr);}
 
   /* Contact */
-  .contact-cols{grid-template-columns:1fr;gap:2.5rem;}
+  .contact-cols{grid-template-columns:minmax(0,1fr);gap:2.5rem;}
   .form{grid-template-columns:1fr;}
   .fg.w2{grid-column:span 1;}
 
@@ -588,8 +628,6 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   .sec,.sec.alt,.sec.same{padding:2.8rem 1rem;}
   #about{padding:2.8rem 1rem;}
   #hero{padding:5.5rem 1rem 3rem;}
-  .wb-stats{grid-template-columns:1fr 1fr;}
-  .wb-stat:last-child{grid-column:span 2;border-right:none;border-top:1px solid var(--bdr);}
   .train-grid{grid-template-columns:1fr;}
   .edu-grid{grid-template-columns:1fr;}
   .ti{grid-template-columns:1fr;}
@@ -624,24 +662,6 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   #hero{min-height:100svh;}
 }
 
-/* ══════════════════════════════════════════════════
-   WELLE PROJECT CARD responsive grid
-══════════════════════════════════════════════════ */
-@media(max-width:880px){
-  #proj-welle [style*="grid-template-columns:repeat(5,1fr)"],
-  #proj-welle [style*="grid-template-columns:repeat(2,1fr)"],
-  #proj-welle [style*="grid-template-columns:repeat(4,1fr)"]{
-    grid-template-columns:1fr 1fr !important;
-  }
-}
-@media(max-width:480px){
-  #proj-welle [style*="grid-template-columns:repeat(5,1fr)"]{
-    grid-template-columns:1fr !important;
-  }
-  #proj-welle [style*="grid-template-columns:repeat(4,1fr)"]{
-    grid-template-columns:repeat(2,1fr) !important;
-  }
-}
 
 /* ══════════════════════════════════════════════════
    OVERFLOW fix — prevent all horizontal scroll
@@ -651,22 +671,130 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 }
 .proj-grid > *,.bento-wrap > *, .skills-cols > *{min-width:0;}
 
-/* Wide project cards should never overflow on mobile */
-@media(max-width:768px){
-  [style*="grid-column:span 2"]{grid-column:span 1 !important;}
-  .wb-stats{grid-template-columns:1fr 1fr 1fr;}
-}
 
 
 /* ── SPA PAGE NAVIGATION ── */
-[data-spa-group],#hero{will-change:opacity;}
 [data-spa-group].spa-hidden,#hero.spa-hidden,.spa-breadcrumb.spa-hidden{display:none!important;}
 [data-spa-group].spa-in{animation:spaIn .38s cubic-bezier(.22,1,.36,1) both;}
 @keyframes spaIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-.spa-breadcrumb{display:flex;align-items:center;gap:.5rem;padding:.6rem 2.5rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--bdr);background:var(--bg2);font-family:'Cabinet Grotesk',sans-serif;}
+.spa-breadcrumb{display:flex;align-items:center;gap:.5rem;margin-top:var(--nav-h);padding:.6rem 2.5rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--bdr);background:var(--bg2);font-family:'Cabinet Grotesk',sans-serif;}
 .spa-breadcrumb a{color:var(--accent);text-decoration:none;font-weight:700;}
 .spa-breadcrumb span{color:var(--dim);}
 @media(max-width:768px){.spa-breadcrumb{padding:.5rem 1.25rem;}}
+
+/* ══════════════════════════════════════════════════
+   LAYOUT FIXES — every device size
+══════════════════════════════════════════════════ */
+/* The first section of each page starts below the fixed nav (its eyebrow was hidden under the bar on phones) */
+#services,#projects,#experience,#training,#clients,#contact{padding-top:calc(var(--nav-h) + 2.6rem);}
+#about{padding-top:calc(var(--nav-h) + 2.6rem);}
+.spa-breadcrumb + #about{padding-top:2.6rem;}
+@media(max-width:768px){
+  #services,#projects,#experience,#training,#clients,#contact,#about{padding-top:calc(var(--nav-h) + 1.6rem);}
+  .spa-breadcrumb + #about{padding-top:1.6rem;}
+}
+
+/* Nav: tablets/laptops 901–1180px — tighter spacing so links + "Hire Me" fit on one line */
+.nav-links a,.nav-hire{white-space:nowrap;}
+@media(min-width:901px) and (max-width:1180px){
+  nav{padding-left:1.75rem;padding-right:1.75rem;}
+  .nav-links{gap:1.3rem;}
+  .nav-links a{letter-spacing:.08em;}
+}
+
+/* Inline grids inside project/experience cards (marked .ig-*) */
+@media(max-width:600px){
+  .ig-split,.ig-3,.ig-pair{grid-template-columns:minmax(0,1fr) !important;}
+  .ig-stats,.ig-sites,.ig-nrw{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  .fac-row{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+  .fac-row > :first-child{grid-column:1/-1;}
+}
+@media(max-width:440px){
+  .ig-sites,.ig-certs{grid-template-columns:minmax(0,1fr) !important;}
+}
+/* Cards react to their own width, so half-width cards on tablets get the compact layout too */
+@supports (container-type:inline-size){
+  .pcard{container-type:inline-size;}
+  @container (max-width:860px){
+    .ig-sites{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+    .ig-nrw{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+  }
+  @container (max-width:620px){
+    .ig-split,.ig-3,.ig-pair{grid-template-columns:minmax(0,1fr) !important;}
+    .ig-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+    .fac-row{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+    .fac-row > :first-child{grid-column:1/-1;}
+  }
+  @container (min-width:621px){
+    .fac-row > :first-child{grid-column:auto;}
+  }
+  @container (max-width:460px){
+    .ig-sites{grid-template-columns:minmax(0,1fr) !important;}
+    .ig-nrw{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+    .pbody{padding:1.2rem 1.1rem;}
+  }
+}
+.ig > *{min-width:0;}
+.pbody,.ti,.r-card,.clicard,.tcard,.ecard,.bcard{overflow-wrap:break-word;}
+
+/* Research card: the corner badge overlapped the title on narrow screens */
+@media(max-width:600px){
+  .r-card{padding:1.5rem 1.2rem;}
+  .r-badge{position:static;display:inline-block;margin-bottom:1rem;}
+}
+
+/* Phones */
+@media(max-width:480px){
+  .pbody{padding:1.2rem 1.1rem;}
+  h1.hero-name{line-height:.98;}
+  .mbadge{max-width:100%;}
+  .mdot{flex-shrink:0;}
+}
+.clink{overflow-wrap:anywhere;}
+#cak-visit{max-width:calc(100% - 2.8rem);}
+@media(max-width:600px){#cak-visit{display:none !important;}}
+
+/* iOS zooms the page when a focused field's text is under 16px */
+@media(pointer:coarse){.fi,.fta{font-size:16px;}}
+
+/* Large monitors: keep content to a readable width instead of stretching edge to edge */
+@media(min-width:1441px){
+  nav,footer,.spa-breadcrumb,#hero,#about,.sec{padding-left:calc((100% - 1360px) / 2);padding-right:calc((100% - 1360px) / 2);}
+}
+
+/* About photo: on one-column layouts the frame (min-height 340px) overflowed its fixed-height card
+   and covered the start of the About text */
+@media(max-width:760px){
+  .b-photo .photo-frame{min-height:0;height:auto;aspect-ratio:1/1;max-height:520px;}
+}
+@supports not (aspect-ratio:1/1){
+  @media(max-width:760px){.b-photo .photo-frame{height:88vw;max-height:460px;}}
+}
+
+/* Process diagrams: scroll sideways on narrow cards instead of shrinking the labels to ~4px */
+.schematic-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  background:linear-gradient(to right,#0b0e09 30%,rgba(11,14,9,0)),linear-gradient(to left,#0b0e09 30%,rgba(11,14,9,0)) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(78,205,196,.28),transparent),radial-gradient(farthest-side at 100% 50%,rgba(78,205,196,.28),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:36px 100%,36px 100%,12px 100%,12px 100%;background-attachment:local,local,scroll,scroll;}
+@media(max-width:480px){.schematic-scroll svg{min-width:640px;max-height:none !important;}}
+@supports (container-type:inline-size){
+  @container (max-width:460px){.schematic-scroll svg{min-width:640px;max-height:none !important;}}
+}
+
+/* 4-up stat strips that wrap to 2×2: drop the divider on the first item of each row */
+@media(max-width:600px){.ig-stats > :nth-child(odd){border-left:0 !important;}}
+@supports (container-type:inline-size){
+  @container (max-width:620px){.ig-stats > :nth-child(odd){border-left:0 !important;}}
+}
+
+/* first-visit badge: keep it off short landscape screens too */
+@media(max-height:500px){#cak-visit{display:none !important;}}
+
+/* Respect the OS "reduce motion" setting */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  .js .ti:not(.show){opacity:1;transform:none;}
+}
 
 </style>
 
@@ -675,26 +803,38 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
        ══════════════════════════════════════════════════════════════ -->
   <script>
   (function(){
+    // Lets CSS keep content visible when JavaScript is off (scroll-reveal states only apply under .js)
+    document.documentElement.className += ' js';
+
     // ── Visit counter (localStorage) ────────────────────────────
-    var count = parseInt(localStorage.getItem('cak_visits')||'0',10) + 1;
-    localStorage.setItem('cak_visits', count);
+    // Wrapped: storage throws in some private-browsing modes and embedded previews,
+    // which used to abort this whole script (and the cookie banner with it).
+    var count = 1;
+    try {
+      count = parseInt(localStorage.getItem('cak_visits')||'0',10) + 1;
+      localStorage.setItem('cak_visits', count);
+    } catch(e) {}
     window._visitCount = count;
 
     // ── Cookie utilities ─────────────────────────────────────────
     window.CAK_COOKIES = {
       set: function(name,val,days){
-        var d=new Date(); d.setTime(d.getTime()+(days||365)*864e5);
-        document.cookie=name+'='+encodeURIComponent(val)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
+        try {
+          var d=new Date(); d.setTime(d.getTime()+(days||365)*864e5);
+          document.cookie=name+'='+encodeURIComponent(val)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
+        } catch(e) {}
       },
       get: function(name){
-        var m=document.cookie.match('(?:^|; )'+name+'=([^;]*)');
-        return m?decodeURIComponent(m[1]):null;
+        try {
+          var m=document.cookie.match('(?:^|; )'+name+'=([^;]*)');
+          return m?decodeURIComponent(m[1]):null;
+        } catch(e) { return null; }
       },
       has: function(name){ return !!this.get(name); }
     };
 
     // ── Google Analytics 4 ───────────────────────────────────────
-    var GA_ID = 'G-XXXXXXXXXX'; // ← Replace with your GA4 Measurement ID
+    var GA_ID = 'G-5T1HRHGMVW'; // ← Replace with your GA4 Measurement ID
     window._gaLoaded = false;
 
     window.loadGA = function(){
@@ -738,18 +878,18 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 
 <!-- NAV -->
 <nav id="nav" role="navigation" aria-label="Main navigation">
-  <a class="nav-logo" href="javascript:void(0)" data-page="hero">Caleb<b>.</b></a>
+  <a class="nav-logo" href="#hero" data-page="hero">Caleb<b>.</b></a>
   <ul class="nav-links" id="navLinks" role="list">
-    <li><a href="javascript:void(0)" data-page="about">About</a></li>
-    <li><a href="javascript:void(0)" data-page="services">Services</a></li>
-    <li><a href="javascript:void(0)" data-page="projects">Projects</a></li>
-    <li><a href="javascript:void(0)" data-page="experience">Experience</a></li>
-    <li><a href="javascript:void(0)" data-page="training">Training</a></li>
-    <li><a href="javascript:void(0)" data-page="clients">Clients</a></li>
-    <li><a href="javascript:void(0)" data-page="contact">Contact</a></li>
+    <li><a href="#about" data-page="about">About</a></li>
+    <li><a href="#services" data-page="services">Services</a></li>
+    <li><a href="#projects" data-page="projects">Projects</a></li>
+    <li><a href="#experience" data-page="experience">Experience</a></li>
+    <li><a href="#training" data-page="training">Training</a></li>
+    <li><a href="#clients" data-page="clients">Clients</a></li>
+    <li><a href="#contact" data-page="contact">Contact</a></li>
   </ul>
-  <a href="javascript:void(0)" data-page="contact" class="nav-hire">Hire Me</a>
-  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+  <a href="#contact" data-page="contact" class="nav-hire">Hire Me</a>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -768,15 +908,15 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
   <div class="hero-foot">
     <p class="hero-desc">A multi-disciplinary engineer delivering water systems, environmental safeguards, structural assessment, mechanical engineering, and IT infrastructure across East Africa — for global development organisations and government agencies.</p>
     <div class="hero-btns">
-      <a href="javascript:void(0)" data-page="projects" class="btn-p">View Projects</a>
-      <a href="javascript:void(0)" data-page="contact" class="btn-o">Get In Touch</a>
+      <a href="#projects" data-page="projects" class="btn-p">View Projects</a>
+      <a href="#contact" data-page="contact" class="btn-o">Get In Touch</a>
     </div>
   </div>
   <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
 <!-- ABOUT BENTO -->
-<div class="spa-breadcrumb" data-spa-crumb="about"><a href="javascript:void(0)" data-page="hero">Home</a><span>›</span><span>About</span></div><section data-spa-group="about" id="about" aria-label="About Caleb">
+<div class="spa-breadcrumb" data-spa-crumb="about"><a href="#hero" data-page="hero">Home</a><span>›</span><span>About</span></div><section data-spa-group="about" id="about" aria-label="About Caleb">
   <div class="bento-wrap">
 
     <!-- main intro: 2 cols, 2 rows -->
@@ -970,7 +1110,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="ploc" style="margin:.38rem 0 .2rem;">&#128205; Turkana County &nbsp;&middot;&nbsp; Napuu &amp; Lotikipi Aquifer Basins</div>
         <div class="pclient" style="margin-bottom:.7rem;">World Bank Group &nbsp;&middot;&nbsp; Water Resources Authority (WRA) &nbsp;&middot;&nbsp; <span style="color:var(--dim);font-size:.65rem;">Feb &ndash; Sep 2025</span></div>
         <div class="pdesc">A World Bank-funded groundwater resilience programme targeting Turkana County. Caleb&apos;s role spanned two integrated streams under the same HOAGW4RP mandate: <strong style="color:var(--txt);">hydrogeological site identification &amp; socio-economic analysis</strong> for exploration well siting across the Napuu and Lotikipi basins, and <strong style="color:var(--txt);">environmental &amp; social safeguards implementation</strong> under the World Bank ESF alongside WRA.</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0 .9rem;border-top:1px solid var(--bdr);padding-top:.9rem;">
+        <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.75rem;margin:1rem 0 .9rem;border-top:1px solid var(--bdr);padding-top:.9rem;">
           <div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;">&#128302; Groundwater Exploration</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:.32rem;">
@@ -1015,13 +1155,13 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
     </div>
 
 
-        <div id="proj-unhcr" class="pcard" data-cat="water">
+    <div id="proj-unhcr" class="pcard" data-cat="water">
       <div class="pbar water"></div>
 
       <!-- WWTP Process Schematic SVG -->
       <div style="background:#0b0e09;border-bottom:1px solid rgba(78,205,196,0.18);padding:.8rem 1rem .6rem;overflow:hidden;">
         <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(78,205,196,0.7);margin-bottom:.55rem;">WWTP Treatment Process</div>
-        <svg viewBox="0 0 520 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:72px;">
+        <div class="schematic-scroll"><svg viewBox="0 0 520 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:72px;">
           <defs>
             <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
               <path d="M0,0 L0,6 L6,3 z" fill="rgba(78,205,196,0.6)"/>
@@ -1069,7 +1209,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
           <text x="340" y="67" text-anchor="middle" font-size="5.5" fill="rgba(234,230,222,0.45)" font-family="sans-serif">Sludge Bed 20×20m</text>
           <line x1="340" y1="58" x2="340" y2="52" stroke="rgba(100,100,100,0.4)" stroke-width="0.8"/>
           <line x1="203" y1="58" x2="340" y2="58" stroke="rgba(100,100,100,0.35)" stroke-width="0.8" stroke-dasharray="3,2"/>
-        </svg>
+        </svg></div>
       </div>
 
       <div class="pbody">
@@ -1086,8 +1226,8 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="pdesc">Engineering consultancy for the assessment of WASH requirements and detailed design across 6 health facilities serving the Kakuma refugee camp and Kalobeyei integrated settlement — covering water supply, wastewater treatment, sanitation infrastructure, and clinical waste management. Full bidding documents prepared for procurement.</div>
 
         <!-- Facility Table -->
-        <div style="margin:1rem 0;border:1px solid var(--bdr);border-radius:6px;overflow:hidden;">
-          <div style="background:var(--surf2);padding:.5rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;">
+        <div class="fac-table" style="margin:1rem 0;border:1px solid var(--bdr);border-radius:6px;overflow:hidden;">
+          <div class="ig fac-row" style="background:var(--surf2);padding:.5rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;">
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">Facility</div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;">Storage</div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;">Latrines</div>
@@ -1095,7 +1235,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;">Handwash</div>
           </div>
           <!-- Row 1 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Locher Ang&#8217;amor Clinic</div><div style="font-size:.62rem;color:var(--dim);">Clinic 4 &middot; ~350 OPD/day</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">20 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">28 doors</div>
@@ -1103,7 +1243,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">20</div>
           </div>
           <!-- Row 2 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Hong Kong Clinic</div><div style="font-size:.62rem;color:var(--dim);">Clinic 2 &middot; ~500 OPD/day</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">25 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">40 doors</div>
@@ -1111,7 +1251,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">22</div>
           </div>
           <!-- Row 3 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Nationokar Clinic</div><div style="font-size:.62rem;color:var(--dim);">Clinic 6 &middot; ~500 OPD/day</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">30 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">48 doors</div>
@@ -1119,7 +1259,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">36</div>
           </div>
           <!-- Row 4 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Ammusait Gen. Hospital</div><div style="font-size:.62rem;color:var(--dim);">Clinic 7 &middot; 400 OPD + 180 beds</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">60 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">66 doors</div>
@@ -1127,7 +1267,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">30</div>
           </div>
           <!-- Row 5 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Kalobeyei Health Centre</div><div style="font-size:.62rem;color:var(--dim);">~150 OPD + 24 beds</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">25 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">14 doors</div>
@@ -1135,7 +1275,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">18</div>
           </div>
           <!-- Row 6 -->
-          <div style="padding:.45rem .85rem;display:grid;grid-template-columns:1.6fr .8fr .8fr .8fr .8fr;gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
+          <div class="ig fac-row" style="padding:.45rem .85rem;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.8fr);gap:.4rem;border-top:1px solid var(--bdr);background:rgba(255,255,255,.015);align-items:center;">
             <div><div style="font-size:.76rem;color:var(--txt);font-weight:500;">Nakoyo Dispensary</div><div style="font-size:.62rem;color:var(--dim);">~280 OPD/day</div></div>
             <div style="text-align:center;font-size:.72rem;color:var(--teal);">20 m&#179;</div>
             <div style="text-align:center;font-size:.72rem;color:var(--muted);">26 doors</div>
@@ -1147,7 +1287,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <!-- WWTP Highlight -->
         <div style="background:rgba(78,205,196,.05);border:1px solid rgba(78,205,196,.2);border-radius:6px;padding:.85rem 1rem;margin-bottom:.85rem;">
           <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.55rem;">&#9881; Wastewater Treatment Plant Design — 3 Sites</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem .9rem;">
+          <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem .9rem;">
             <div style="font-size:.75rem;color:var(--muted);display:flex;gap:.4rem;line-height:1.4;"><span style="color:var(--teal);flex-shrink:0;">&#8594;</span>150m &times; 50m stabilisation pond system per site</div>
             <div style="font-size:.75rem;color:var(--muted);display:flex;gap:.4rem;line-height:1.4;"><span style="color:var(--teal);flex-shrink:0;">&#8594;</span>Anaerobic + Facultative + Polishing pond sequence</div>
             <div style="font-size:.75rem;color:var(--muted);display:flex;gap:.4rem;line-height:1.4;"><span style="color:var(--teal);flex-shrink:0;">&#8594;</span>2 &times; aeration chambers + aggregate filtration</div>
@@ -1170,7 +1310,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div>
       </div>
     </div>
-    <div id="proj-ngurunit" class="pcard" data-cat="water" style="grid-column:span 2;">
+    <div id="proj-ngurunit" class="pcard pcard-wide" data-cat="water">
       <div class="pbar" style="height:4px;background:linear-gradient(90deg,var(--teal),#6ecbc4,var(--accent));"></div>
       <div class="pbody">
         <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;">
@@ -1182,10 +1322,10 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="ploc" style="margin:.38rem 0 .2rem;">📍 Ngurunit Ward · Laisamis Sub-County · Marsabit County &nbsp;·&nbsp; Jan – Mar 2025</div>
         <div class="pclient" style="margin-bottom:.8rem;">Church World Service (CWS) Kenya &nbsp;·&nbsp; PWRDF &nbsp;·&nbsp; CFGB &nbsp;·&nbsp; Marsabit County Government &nbsp;·&nbsp; <span style="color:var(--dim);font-size:.62rem;">Contract No. CWS-2667</span></div>
         <div class="pdesc" style="margin-bottom:1rem;">Comprehensive field engineering for the Farakoren Water Pan Project — serving camel, cattle, goat and sheep pastoralists ~147 km from Marsabit Town who migrate into Samburu County every dry season. Following additional topographic survey work, a revised dual-pond design totalling <strong style="color:var(--teal);">29,640 m³</strong> was produced in July 2025 — comprising Pond A (12,106 m³ @ HWL 718 m) and Pond B (17,534 m³ @ HWL 717 m), with total earthworks of 25,385 m³.</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem;">
+        <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.75rem;margin-bottom:1rem;">
           <div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.55rem;">⚙ Key Design Parameters</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;">
+            <div class="ig ig-tiles" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.4rem;">
               <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Storage (Feb 2025)</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">&gt;17,000 m³</div></div>
               <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Storage (Jul 2025)</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--teal);">29,640 m³</div></div>
               <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Total Excavation</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">25,385 m³</div></div>
@@ -1212,7 +1352,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
             </ul>
           </div>
         </div>
-        <div style="background:rgba(78,205,196,.04);border:1px solid rgba(78,205,196,.15);border-radius:7px;padding:.7rem 1rem;margin-bottom:.9rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;">
+        <div class="ig ig-stats" style="background:rgba(78,205,196,.04);border:1px solid rgba(78,205,196,.15);border-radius:7px;padding:.7rem 1rem;margin-bottom:.9rem;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;">
           <div style="text-align:center;"><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.35rem;font-weight:800;color:var(--teal);line-height:1;">29,640</div><div style="font-size:.62rem;color:var(--dim);margin-top:.15rem;">m³ Final Design</div></div>
           <div style="text-align:center;"><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.35rem;font-weight:800;color:var(--txt);line-height:1;">147 km</div><div style="font-size:.62rem;color:var(--dim);margin-top:.15rem;">from Marsabit Town</div></div>
           <div style="text-align:center;"><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.35rem;font-weight:800;color:var(--amber);line-height:1;">206 mm</div><div style="font-size:.62rem;color:var(--dim);margin-top:.15rem;">Mean Annual Rainfall</div></div>
@@ -1223,7 +1363,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div>
       </div>
     </div>
-    <div id="proj-concern" class="pcard" data-cat="water" style="grid-column:span 2;">
+    <div id="proj-concern" class="pcard pcard-wide" data-cat="water">
       <div class="pbar" style="height:4px;background:linear-gradient(90deg,#e2231a,var(--amber),var(--teal),var(--blue));"></div>
       <div class="pbody">
         <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;">
@@ -1237,7 +1377,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="pdesc" style="margin-bottom:1rem;">Detailed technical engineering designs, hydraulic models, Books of Drawing, and complete tender/BOQ packages for <strong style="color:var(--txt);">8 WASH infrastructure sites</strong> across Marsabit and Isiolo Counties under the Concern Worldwide SWASAP Call 2 programme (DANIDA → WSTF funding). Sites span five water pan designs (totalling &gt;150,000 m³ aggregate pastoral storage) and four piped water supply scheme rehabilitations, each with solar pumping, HDPE reticulation, and communal water kiosks.</div>
 
         <!-- 8-site grid -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-bottom:1.1rem;">
+        <div class="ig ig-sites" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem;margin-bottom:1.1rem;">
 
           <!-- Pan sites -->
           <div style="background:rgba(78,205,196,.05);border:1px solid rgba(78,205,196,.18);border-radius:7px;padding:.75rem .85rem;">
@@ -1347,7 +1487,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div><!-- end 8-site grid -->
 
         <!-- Programme footer bar -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;border-top:1px solid var(--bdr);padding-top:.85rem;">
+        <div class="ig ig-stats" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;border-top:1px solid var(--bdr);padding-top:.85rem;">
           <div style="text-align:center;">
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.45rem;font-weight:800;color:var(--txt);line-height:1;">8</div>
             <div style="font-size:.63rem;color:var(--dim);margin-top:.18rem;">Sites Designed</div>
@@ -1371,13 +1511,62 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div>
       </div>
     </div>
-        <div id="proj-hydrogeology" class="pcard" data-cat="env hydrogeology">
+    <div id="proj-thwake" class="pcard pcard-wide" data-cat="struct">
+      <div class="pbar" style="height:4px;background:linear-gradient(90deg,var(--amber),var(--red),var(--amber));"></div>
+      <div class="pbody">
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;">
+          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(224,154,60,.1);border:1px solid rgba(224,154,60,.28);color:var(--amber);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">Blast Forensics</span>
+          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(224,107,90,.08);border:1px solid rgba(224,107,90,.25);color:var(--red);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">Structural Assessment</span>
+          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(106,171,245,.07);border:1px solid rgba(106,171,245,.22);color:var(--blue);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">AfDB · Vision 2030</span>
+        </div>
+        <div class="ptitle" style="font-size:1.05rem;line-height:1.25;">Thwake Multipurpose Dam — Blast-Induced Structural Damage Assessment</div>
+        <div class="ploc" style="margin:.38rem 0 .2rem;">📍 Makueni &amp; Kitui Counties &nbsp;·&nbsp; ~180 km SE of Nairobi &nbsp;·&nbsp; Nov 2025 – Feb 2026</div>
+        <div class="pclient" style="margin-bottom:.8rem;">Ministry of Water, Sanitation &amp; Irrigation &nbsp;·&nbsp; SMEC International &nbsp;·&nbsp; <span style="color:var(--dim);font-size:.62rem;">Ref. MWSI/WTR/PS/7/VOL.11(78)</span></div>
+        <div class="pdesc" style="margin-bottom:1rem;">Member of a multiagency forensic team — structural engineers, mining/explosives expert, quantity surveyors — commissioned by the Ministry of Water to investigate community complaints of blast-induced structural damage caused by contractor <strong style="color:var(--txt);">China Gezhouba Group Company Limited (CGGC)</strong> during Phase 1 of Kenya's flagship Vision 2030 Thwake Dam. The assessment was a critical gate for <strong style="color:var(--amber);">African Development Bank Additional Funding approval</strong>, escalated by the Ministry Project Engineer directly to SMEC's Authorised Representative.</div>
+        <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.75rem;margin-bottom:1rem;">
+          <div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.55rem;">🏗 Dam Programme</div>
+            <div class="ig ig-tiles" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.4rem;">
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Height</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">80.5 m</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Reservoir</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">688 MCM</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Water Supply</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--blue);">150K m³/day</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Hydropower</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--teal);">~20 MW</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Beneficiaries</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">1.3M people</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Irrigation</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--accent);">40,000 ha</div></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem;">🔬 Assessment Scope</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:.3rem;">
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span><span><strong style="color:var(--txt);">330 households</strong> across Mavindini, Kathulumbi, Kathongo, Nzambia &amp; Kanyangi — 27 Nov–2 Dec 2025</span></li>
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>Blast zones: Spillway, Dam Axis, Embankment, GQ1 Quarry, Powerhouse, Access Adit, Discharge Channel</li>
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span><span>Distances: <strong style="color:var(--txt);">0.935–10.401 km</strong> from GQ1 blast pit via Haversine formula</span></li>
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>ASTM crack classification; crack gauge; NDT: Rebound Hammer + Rebar Scanner</li>
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>PPV: PPV=K(D/√W)⁻¹·⁶ vs. 5 mm/s (LN 61/2009) · USBM RI8507 · DIN4150-3 · BS 7385.2</li>
+              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>GIS buffer analysis at 2 km from GQ1; masonry unit testing vs. KS 2801-1:2019</li>
+            </ul>
+          </div>
+        </div>
+        <div style="background:rgba(224,107,90,.05);border:1px solid rgba(224,107,90,.15);border-radius:7px;padding:.75rem 1rem;margin-bottom:.9rem;">
+          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.45rem;">⚠ Key Findings</div>
+          <div class="ig ig-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;">
+            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;"><strong style="color:var(--txt);">&gt;70%</strong> of walls used soil mortar — below KS 2801-1:2019; fired brick ≥150 mm highly susceptible to cracking under combined settlement + vibration</div>
+            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;">Cracks: <strong style="color:var(--txt);">0.5–16.4 m</strong> per structure; 1–9 individual cracks per element. PPV &lt;5 mm/s can still cause visible cracking on fragile red-soil masonry</div>
+            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;">CGGC withheld initiation plans &amp; emulsion data — causation inconclusive; AfDB funding contingent on <strong style="color:var(--txt);">CGGC providing complete blasting data</strong></div>
+          </div>
+        </div>
+        <div class="ppills">
+          <span class="ppill">Blast Forensics (PPV)</span><span class="ppill">Structural Assessment</span><span class="ppill">ASTM Crack Classification</span><span class="ppill">NDT — Rebound Hammer</span><span class="ppill">GIS Spatial Analysis</span><span class="ppill">USBM RI 8507</span><span class="ppill">DIN 4150-3</span><span class="ppill">330 HH Field Survey</span><span class="ppill">AfDB Compliance</span>
+        </div>
+      </div>
+    </div>
+    <div id="proj-hydrogeology" class="pcard pcard-tall" data-cat="env hydrogeology">
       <div class="pbar" style="background:linear-gradient(90deg,#4ecdc4,#b9f56b,rgba(185,245,107,0.4))"></div>
 
       <!-- VES Resistivity Profile inline schematic -->
       <div style="background:#0b0e09;border-bottom:1px solid rgba(78,205,196,0.15);padding:.7rem 1rem .5rem;">
         <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(78,205,196,0.7);margin-bottom:.5rem;">Hydrostratigraphic Profile — VES Interpretation (Idsowe Site 1)</div>
-        <svg viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:90px;">
+        <div class="schematic-scroll"><svg viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:90px;">
           <!-- Depth axis labels -->
           <text x="4" y="14" font-size="6" fill="rgba(234,230,222,0.4)" font-family="sans-serif">0m</text>
           <text x="4" y="32" font-size="6" fill="rgba(234,230,222,0.4)" font-family="sans-serif">5m</text>
@@ -1408,7 +1597,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
           <line x1="440" y1="10" x2="440" y2="80" stroke="rgba(185,245,107,0.7)" stroke-width="1.5" stroke-dasharray="3,2"/>
           <polygon points="436,76 444,76 440,84" fill="rgba(185,245,107,0.85)"/>
           <text x="444" y="22" font-size="5.5" fill="rgba(185,245,107,0.75)" font-family="sans-serif">Drill path</text>
-        </svg>
+        </svg></div>
       </div>
 
       <div class="pbody">
@@ -1424,7 +1613,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 
         <div class="pdesc">Engineering consultancy for identifying and characterising a suitable production borehole site to provide clean water access to <strong style="color:var(--txt);">500 IDP households</strong> in the Kachadue community, Garsen West Ward. Residents presently depend on discoloured, contaminated ponds and road-side stagnant water. The project is financed by the <strong style="color:var(--txt);">Church of Jesus Christ of Latter-Day Saints</strong> and implemented through CWS Kenya.</div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0 .9rem;border-top:1px solid var(--bdr);padding-top:.9rem;">
+        <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.75rem;margin:1rem 0 .9rem;border-top:1px solid var(--bdr);padding-top:.9rem;">
           <div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;">&#128302; Hydrogeological &amp; Geophysical</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:.32rem;">
@@ -1448,7 +1637,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div>
 
         <!-- Key parameters strip -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.9rem;background:rgba(255,255,255,.025);border:1px solid var(--bdr);border-radius:5px;padding:.65rem .75rem;">
+        <div class="ig ig-stats" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-bottom:.9rem;background:rgba(255,255,255,.025);border:1px solid var(--bdr);border-radius:5px;padding:.65rem .75rem;">
           <div style="text-align:center;">
             <div style="font-size:1.15rem;font-weight:700;color:var(--teal);font-family:'Cabinet Grotesk',sans-serif;line-height:1.1;">26m</div>
             <div style="font-size:.62rem;color:var(--dim);margin-top:.18rem;">Max Drill Depth</div>
@@ -1480,55 +1669,6 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div>
       </div>
     </div>
-    <div id="proj-thwake" class="pcard" data-cat="struct" style="grid-column:span 2;">
-      <div class="pbar" style="height:4px;background:linear-gradient(90deg,var(--amber),var(--red),var(--amber));"></div>
-      <div class="pbody">
-        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;">
-          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(224,154,60,.1);border:1px solid rgba(224,154,60,.28);color:var(--amber);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">Blast Forensics</span>
-          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(224,107,90,.08);border:1px solid rgba(224,107,90,.25);color:var(--red);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">Structural Assessment</span>
-          <span style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .58rem;background:rgba(106,171,245,.07);border:1px solid rgba(106,171,245,.22);color:var(--blue);border-radius:3px;font-family:'Cabinet Grotesk',sans-serif;">AfDB · Vision 2030</span>
-        </div>
-        <div class="ptitle" style="font-size:1.05rem;line-height:1.25;">Thwake Multipurpose Dam — Blast-Induced Structural Damage Assessment</div>
-        <div class="ploc" style="margin:.38rem 0 .2rem;">📍 Makueni &amp; Kitui Counties &nbsp;·&nbsp; ~180 km SE of Nairobi &nbsp;·&nbsp; Nov 2025 – Feb 2026</div>
-        <div class="pclient" style="margin-bottom:.8rem;">Ministry of Water, Sanitation &amp; Irrigation &nbsp;·&nbsp; SMEC International &nbsp;·&nbsp; <span style="color:var(--dim);font-size:.62rem;">Ref. MWSI/WTR/PS/7/VOL.11(78)</span></div>
-        <div class="pdesc" style="margin-bottom:1rem;">Member of a multiagency forensic team — structural engineers, mining/explosives expert, quantity surveyors — commissioned by the Ministry of Water to investigate community complaints of blast-induced structural damage caused by contractor <strong style="color:var(--txt);">China Gezhouba Group Company Limited (CGGC)</strong> during Phase 1 of Kenya's flagship Vision 2030 Thwake Dam. The assessment was a critical gate for <strong style="color:var(--amber);">African Development Bank Additional Funding approval</strong>, escalated by the Ministry Project Engineer directly to SMEC's Authorised Representative.</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem;">
-          <div>
-            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.55rem;">🏗 Dam Programme</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;">
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Height</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">80.5 m</div></div>
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Reservoir</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">688 MCM</div></div>
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Water Supply</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--blue);">150K m³/day</div></div>
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Hydropower</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--teal);">~20 MW</div></div>
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Beneficiaries</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--txt);">1.3M people</div></div>
-              <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.45rem .6rem;"><div style="font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;">Irrigation</div><div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;color:var(--accent);">40,000 ha</div></div>
-            </div>
-          </div>
-          <div>
-            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem;">🔬 Assessment Scope</div>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:.3rem;">
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span><strong style="color:var(--txt);">330 households</strong> across Mavindini, Kathulumbi, Kathongo, Nzambia &amp; Kanyangi — 27 Nov–2 Dec 2025</li>
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>Blast zones: Spillway, Dam Axis, Embankment, GQ1 Quarry, Powerhouse, Access Adit, Discharge Channel</li>
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>Distances: <strong style="color:var(--txt);">0.935–10.401 km</strong> from GQ1 blast pit via Haversine formula</li>
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>ASTM crack classification; crack gauge; NDT: Rebound Hammer + Rebar Scanner</li>
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>PPV: PPV=K(D/√W)⁻¹·⁶ vs. 5 mm/s (LN 61/2009) · USBM RI8507 · DIN4150-3 · BS 7385.2</li>
-              <li style="font-size:.75rem;color:var(--muted);display:flex;gap:.42rem;line-height:1.45;"><span style="color:var(--amber);flex-shrink:0;">→</span>GIS buffer analysis at 2 km from GQ1; masonry unit testing vs. KS 2801-1:2019</li>
-            </ul>
-          </div>
-        </div>
-        <div style="background:rgba(224,107,90,.05);border:1px solid rgba(224,107,90,.15);border-radius:7px;padding:.75rem 1rem;margin-bottom:.9rem;">
-          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.45rem;">⚠ Key Findings</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;">
-            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;"><strong style="color:var(--txt);">&gt;70%</strong> of walls used soil mortar — below KS 2801-1:2019; fired brick ≥150 mm highly susceptible to cracking under combined settlement + vibration</div>
-            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;">Cracks: <strong style="color:var(--txt);">0.5–16.4 m</strong> per structure; 1–9 individual cracks per element. PPV &lt;5 mm/s can still cause visible cracking on fragile red-soil masonry</div>
-            <div style="font-size:.74rem;color:var(--muted);line-height:1.5;">CGGC withheld initiation plans &amp; emulsion data — causation inconclusive; AfDB funding contingent on <strong style="color:var(--txt);">CGGC providing complete blasting data</strong></div>
-          </div>
-        </div>
-        <div class="ppills">
-          <span class="ppill">Blast Forensics (PPV)</span><span class="ppill">Structural Assessment</span><span class="ppill">ASTM Crack Classification</span><span class="ppill">NDT — Rebound Hammer</span><span class="ppill">GIS Spatial Analysis</span><span class="ppill">USBM RI 8507</span><span class="ppill">DIN 4150-3</span><span class="ppill">330 HH Field Survey</span><span class="ppill">AfDB Compliance</span>
-        </div>
-      </div>
-    </div>
     <div id="proj-worldvision" class="pcard" data-cat="water">
       <div class="pbar water"></div><div class="pbody">
       <div class="pcat water">Water Infrastructure</div>
@@ -1544,7 +1684,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       <div class="pcat water">Irrigation Engineering</div>
       <div class="ptitle">Kisiiki Irrigation Project</div>
       <div class="ploc">📍 Machakos County</div>
-      <div class="pdesc">Technical design support, site supervision, and coordination for the Kisiiki Irrigation Project under the National Irrigation Authority's public service internship programme. Ongoing from January 2026. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-nia" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Project card ↓</a></div>
+      <div class="pdesc">Technical design support, site supervision, and coordination for the Kisiiki Irrigation Project under the National Irrigation Authority's public service internship programme. Ongoing from January 2026. <a href="#proj-nia" data-page="projects" data-anchor="proj-nia" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Project card ↓</a></div>
       <div class="pclient">National Irrigation Authority · Jan 2026 – Present</div>
       <div class="ppills"><span class="ppill">Irrigation</span><span class="ppill">Site Supervision</span><span class="ppill">Public Service</span></div>
       </div>
@@ -1563,7 +1703,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
     <!-- ═══════════════════════════════════════════
          WELLE GROUP — Multi-County Water Utility Engagement
     ═══════════════════════════════════════════ -->
-    <div id="proj-welle" class="pcard" data-cat="water watertech research" style="grid-column:span 2;">
+    <div id="proj-welle" class="pcard pcard-wide" data-cat="water watertech research">
       <div class="pbar" style="height:4px;background:linear-gradient(90deg,#6aabf5,#4ecdc4,#b9f56b);"></div>
 
       <!-- Animated dashboard preview header -->
@@ -1571,7 +1711,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(106,171,245,.05) 0%,transparent 70%);pointer-events:none;"></div>
         <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(106,171,245,0.75);margin-bottom:.6rem;">Smart Water Infrastructure Monitoring Platform — DMA Dashboard Concept</div>
         <!-- DMA visualisation grid -->
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.35rem;margin-bottom:.5rem;">
+        <div class="ig ig-nrw" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.35rem;margin-bottom:.5rem;">
           <!-- NRW gauges for each utility -->
           <div style="background:rgba(255,255,255,.04);border:1px solid rgba(106,171,245,.14);border-radius:6px;padding:.45rem .5rem;text-align:center;">
             <div style="font-size:.58rem;color:rgba(106,171,245,.7);font-family:'Cabinet Grotesk',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.28rem;">HOMAWASCO</div>
@@ -1645,7 +1785,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="pdesc" style="margin-bottom:1rem;">Served as JKUAT Representative alongside Prof. Min Liu (Nanjing University of Information Science &amp; Technology) and Welle Group Kenya for a multi-county stakeholder engagement programme targeting Kenya's water utility sector. Facilitated technical meetings with five water service providers, prepared needs assessment and NRW management reports, negotiated pilot meter trial agreements, and developed partnership frameworks to advance smart metering, District Metered Area (DMA) implementation, and GIS pipeline network digitisation across Kenya's devolved water sector.</div>
 
         <!-- County engagement cards 2x2 grid -->
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;margin-bottom:1.1rem;">
+        <div class="ig ig-pair" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-bottom:1.1rem;">
 
           <div style="background:rgba(106,171,245,.05);border:1px solid rgba(106,171,245,.18);border-left:3px solid rgba(106,171,245,.5);border-radius:7px;padding:.8rem 1rem;">
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.45rem;">🏢 HOMAWASCO — Homa Bay County</div>
@@ -1690,7 +1830,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         </div><!-- end county grid -->
 
         <!-- Deliverables / methodology footer bar -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;border-top:1px solid var(--bdr);padding-top:.85rem;margin-bottom:.8rem;">
+        <div class="ig ig-stats" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;border-top:1px solid var(--bdr);padding-top:.85rem;margin-bottom:.8rem;">
           <div style="text-align:center;">
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.45rem;font-weight:800;color:var(--txt);line-height:1;">5+</div>
             <div style="font-size:.63rem;color:var(--dim);margin-top:.18rem;">WSPs Engaged</div>
@@ -1783,7 +1923,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       </div>
       <div>
         <div class="ti-role" style="color:var(--amber);">Assistant Structural Engineer — Blast Impact Assessment</div>
-        <div class="ti-desc">Multiagency forensic assessment of blast-induced structural damage from Phase 1 dam construction — a critical gate for AfDB Additional Funding. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-thwake" style="color:var(--amber);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Multiagency forensic assessment of blast-induced structural damage from Phase 1 dam construction — a critical gate for AfDB Additional Funding. <a href="#proj-thwake" data-page="projects" data-anchor="proj-thwake" style="color:var(--amber);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">Blast Forensics</span><span class="ti-pill">Structural Assessment</span><span class="ti-pill">330 HH · 5 Locations</span><span class="ti-pill">GIS Mapping</span><span class="ti-pill">AfDB Compliance</span>
         </div>
@@ -1806,7 +1946,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       </div>
       <div>
         <div class="ti-role" style="color:var(--blue);">Business Development Associate &amp; JKUAT Technical Representative</div>
-        <div class="ti-desc">Served as JKUAT representative alongside Prof. Min Liu's team from Nanjing University of Information Science and Technology for a multi-county water utility digitisation programme across Kenya. Facilitated high-level stakeholder meetings with HOMAWASCO (Homa Bay), Oloolaiser WSC (Kajiado), MoWEENR-Kisii, and NYEWASCO (Nyeri). Authored meeting minutes, needs assessment reports, and NRW management plans for 5+ water service providers. Negotiated pilot Water Meter Trial Agreements, developed PPP partnership frameworks, and coordinated JKUAT capacity-building proposals with county governments. Demonstrated Welle Group's smart metering, DMA, and GIS pipeline monitoring platform to water utility decision-makers. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-welle" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Served as JKUAT representative alongside Prof. Min Liu's team from Nanjing University of Information Science and Technology for a multi-county water utility digitisation programme across Kenya. Facilitated high-level stakeholder meetings with HOMAWASCO (Homa Bay), Oloolaiser WSC (Kajiado), MoWEENR-Kisii, and NYEWASCO (Nyeri). Authored meeting minutes, needs assessment reports, and NRW management plans for 5+ water service providers. Negotiated pilot Water Meter Trial Agreements, developed PPP partnership frameworks, and coordinated JKUAT capacity-building proposals with county governments. Demonstrated Welle Group's smart metering, DMA, and GIS pipeline monitoring platform to water utility decision-makers. <a href="#proj-welle" data-page="projects" data-anchor="proj-welle" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">Needs Assessment Reports</span>
           <span class="ti-pill">NRW Management Plans</span>
@@ -1827,7 +1967,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       </div>
       <div>
         <div class="ti-role" style="color:var(--teal);">Engineering Assistant — Multi-Site WASH Infrastructure Design</div>
-        <div class="ti-desc">Detailed engineering design across 8 WASH sites — 5 water pans (&gt;150,000 m³ aggregate storage) and 4 supply scheme rehabilitations in remote ASAL counties, including BOQs, Books of Drawing, hydraulic models, and tender documents. Credited as <em>Field Assistant / Engineers' Assistant</em> in submitted design reports. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-concern" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Detailed engineering design across 8 WASH sites — 5 water pans (&gt;150,000 m³ aggregate storage) and 4 supply scheme rehabilitations in remote ASAL counties, including BOQs, Books of Drawing, hydraulic models, and tender documents. Credited as <em>Field Assistant / Engineers' Assistant</em> in submitted design reports. <a href="#proj-concern" data-page="projects" data-anchor="proj-concern" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">Water Pan Design</span><span class="ti-pill">Supply Schemes</span><span class="ti-pill">EPANET</span><span class="ti-pill">BOQ &amp; Tender Docs</span><span class="ti-pill">CAD / Civil 3D</span><span class="ti-pill">ASAL WASH</span>
         </div>
@@ -1841,7 +1981,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       <div><div class="ti-date">Feb – Sep 2025</div><div class="ti-org">Water Resources Authority &amp; World Bank<br><span style="font-size:.75rem;color:var(--muted);">Turkana County</span></div><div class="ti-contract">HOAGW4RP · Horn of Africa Groundwater for Resilience Project</div></div>
       <div>
         <div class="ti-role" style="color:var(--blue);">Field Assistant — Hydrogeology &amp; Environmental Safeguards</div>
-        <div class="ti-desc">Dual-stream role: hydrogeological assessment of 25 well sites across the Napuu &amp; Lotikipi aquifer basins; and World Bank ESF environmental safeguards — ESMP review, ESCP compliance monitoring, Joint Implementation Missions with WRA. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-worldbank" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Dual-stream role: hydrogeological assessment of 25 well sites across the Napuu &amp; Lotikipi aquifer basins; and World Bank ESF environmental safeguards — ESMP review, ESCP compliance monitoring, Joint Implementation Missions with WRA. <a href="#proj-worldbank" data-page="projects" data-anchor="proj-worldbank" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">World Bank ESF</span><span class="ti-pill">Hydrogeology</span><span class="ti-pill">ESMP / ESCP</span><span class="ti-pill">GIS / KML</span><span class="ti-pill">25 Well Sites</span>
         </div>
@@ -1852,7 +1992,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       <div><div class="ti-date">Jan – Mar 2025</div><div class="ti-org">Church World Service (CWS)<br><span style="font-size:.75rem;color:var(--muted);">Ngurunit Ward · Marsabit County</span></div><div class="ti-contract">Contract No. CWS-2667 · PWRDF + CFGB + Marsabit County Government</div></div>
       <div>
         <div class="ti-role">Field Assistant — Farakoren Water Pan EIA &amp; Design</div>
-        <div class="ti-desc">Topographic survey, NRCS-CN hydrological design, ESIA, and full reticulation design for a 17,000+ m³ pastoral water pan (later revised to 29,640 m³ dual-pond under Concern Worldwide / WSTF). <a href="javascript:void(0)" data-page="projects" data-anchor="proj-ngurunit" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Topographic survey, NRCS-CN hydrological design, ESIA, and full reticulation design for a 17,000+ m³ pastoral water pan (later revised to 29,640 m³ dual-pond under Concern Worldwide / WSTF). <a href="#proj-ngurunit" data-page="projects" data-anchor="proj-ngurunit" style="color:var(--teal);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">Water Pan Design</span><span class="ti-pill">NRCS-CN Hydrology</span><span class="ti-pill">ESIA / NEMA</span><span class="ti-pill">Topographic Survey</span><span class="ti-pill">ASAL / Pastoral</span>
         </div>
@@ -1863,7 +2003,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       <div><div class="ti-date">Jul – Aug 2024</div><div class="ti-org">UNHCR<br><span style="font-size:.75rem;color:var(--muted);">Kakuma / Kalobeyei, Turkana West</span></div></div>
       <div>
         <div class="ti-role" style="color:var(--blue);">Associate Consultant — WASH Assessment &amp; Design</div>
-        <div class="ti-desc">Pre-feasibility and detailed feasibility assessments + complete WASH design for 6 health facilities in Kakuma refugee camp and Kalobeyei integrated settlement — water supply, WWTP, sanitation, and full bidding documents. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-unhcr" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
+        <div class="ti-desc">Pre-feasibility and detailed feasibility assessments + complete WASH design for 6 health facilities in Kakuma refugee camp and Kalobeyei integrated settlement — water supply, WWTP, sanitation, and full bidding documents. <a href="#proj-unhcr" data-page="projects" data-anchor="proj-unhcr" style="color:var(--blue);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">Full case study in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">WASH Feasibility</span><span class="ti-pill">WWTP Design</span><span class="ti-pill">6 Health Facilities</span><span class="ti-pill">Bid Documents</span><span class="ti-pill">Refugee Context</span>
         </div>
@@ -1877,7 +2017,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       </div>
       <div>
         <div class="ti-role" style="color:var(--accent);">Field Assistant — Topographic Survey &amp; ESIA</div>
-        <div class="ti-desc">Topographical and hydrological surveys, ESIA, water pan and reticulation designs, and bidding documents for 6 water pans across Kajiado and Narok Counties. <a href="javascript:void(0)" data-page="projects" data-anchor="proj-worldvision" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">See project card in Projects ↓</a></div>
+        <div class="ti-desc">Topographical and hydrological surveys, ESIA, water pan and reticulation designs, and bidding documents for 6 water pans across Kajiado and Narok Counties. <a href="#proj-worldvision" data-page="projects" data-anchor="proj-worldvision" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-size:.78rem;">See project card in Projects ↓</a></div>
         <div class="ti-pills">
           <span class="ti-pill">Topographic Survey</span><span class="ti-pill">ESIA</span><span class="ti-pill">Water Pan Design</span><span class="ti-pill">Bid Documents</span>
         </div>
@@ -1897,7 +2037,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="ti-desc" style="margin-bottom:.55rem;">
           Three-month hands-on attachment in Mantrac Kenya's heavy equipment Service Department, completing the Caterpillar <em>Technicians for Africa</em> programme concurrently. Worked directly on Caterpillar plant equipment — engines, transmissions, generators, and machines — gaining structured exposure to CAT service procedures and workshop operations. Commended by HR for being <em>"very cooperative, dedicated to duty, a great team player and demonstrating professionalism."</em>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.25rem .8rem;margin-bottom:.6rem;">
+        <div class="ig ig-split" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.25rem .8rem;margin-bottom:.6rem;">
           <div style="font-size:.77rem;color:var(--muted);line-height:1.55;">⚙️ &nbsp;Engine disassembly, assembly &amp; testing</div>
           <div style="font-size:.77rem;color:var(--muted);line-height:1.55;">🔩 &nbsp;Transmission disassembly, assembly &amp; testing</div>
           <div style="font-size:.77rem;color:var(--muted);line-height:1.55;">🔍 &nbsp;Pre-delivery inspection — machines &amp; generators</div>
@@ -1932,7 +2072,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
         <div class="ti-desc" style="margin-bottom:.65rem;">
           Full-spectrum engineering attachment within LVSWWDA's Technical Department, supporting the AFD-funded <strong style="color:var(--txt);">Kisumu LVWATSAN Programme</strong> — a KES 68.3 M urban water and sanitation transformation programme for Kisumu City implemented under COWI A/S (Denmark) with PricewaterhouseCoopers as sub-consultant (Contract LVSWSB/RFP/C/03/2017-2018). Prepared all five Interim Payment Certificates (IPCs 1–5) covering EUR 362,312 in consultant invoices across five quarterly billing periods (Sep 2018 – Dec 2019).
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem .8rem;margin-bottom:.7rem;">
+        <div class="ig ig-tiles" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem .8rem;margin-bottom:.7rem;">
           <div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:5px;padding:.4rem .6rem;">
             <div style="font-size:.56rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.12rem;">Programme Value</div>
             <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:.88rem;font-weight:700;color:var(--blue);">KES 68.3 M</div>
@@ -2031,7 +2171,7 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
           <div class="t-desc" style="margin-top:.45rem;">A structured, multi-level technical training programme delivered through Caterpillar's Global Dealer Learning platform — designed to develop certified heavy equipment technicians across Africa. Covering CAT product orientation, foundational machine systems, service procedures, diagnostics, and equipment lifecycle management. All four certifications achieved within a six-week span; the full programme was completed concurrently during the Mantrac Kenya Service Department attachment.</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem .75rem;padding-left:.3rem;">
+      <div class="ig ig-certs" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem .75rem;padding-left:.3rem;">
         <div style="background:rgba(255,210,0,.06);border:1px solid rgba(255,210,0,.18);border-radius:8px;padding:.55rem .75rem;">
           <div style="font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#c49000;margin-bottom:.2rem;">Certificate 1</div>
           <div style="font-size:.8rem;font-weight:600;color:var(--txt);">Caterpillar Introduction</div>
@@ -2172,19 +2312,19 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
       <div class="clinks">
         <a href="mailto:calebakwe@gmail.com" class="clink"><div class="clink-ic">✉</div>calebakwe@gmail.com</a>
         <a href="tel:+254741426162" class="clink"><div class="clink-ic">✆</div>+254 741-426-162</a>
-        <a href="https://linkedin.com/in/caleb-akwesera-526a21169" target="_blank" class="clink"><div class="clink-ic">in</div>linkedin.com/in/caleb-akwesera-526a21169</a>
+        <a href="https://linkedin.com/in/caleb-akwesera-526a21169" target="_blank" rel="noopener" class="clink"><div class="clink-ic">in</div>linkedin.com/in/caleb-akwesera-526a21169</a>
       </div>
     </div>
     <div>
       <div class="avail-tag"><span class="adot"></span>Open to engineering consultancy, field roles &amp; full-time positions</div>
-      <div class="form">
-        <div class="fg"><label class="flbl">Name</label><input class="fi" type="text" placeholder="Your name" id="fn"/></div>
-        <div class="fg"><label class="flbl">Email</label><input class="fi" type="email" placeholder="your@email.com" id="fe"/></div>
-        <div class="fg w2"><label class="flbl">Subject</label><input class="fi" type="text" placeholder="Project inquiry, job opportunity…" id="fs"/></div>
-        <div class="fg w2"><label class="flbl">Message</label><textarea class="fta" placeholder="Describe your project or opportunity…" id="fm"></textarea></div>
-        <button class="fsub" onclick="doSend()">Send Message →</button>
-        <div class="fmsg" id="fmsg"></div>
-      </div>
+      <form class="form" id="contactForm" novalidate>
+        <div class="fg"><label class="flbl" for="fn">Name</label><input class="fi" type="text" placeholder="Your name" id="fn" name="name" autocomplete="name" required/></div>
+        <div class="fg"><label class="flbl" for="fe">Email</label><input class="fi" type="email" placeholder="your@email.com" id="fe" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required/></div>
+        <div class="fg w2"><label class="flbl" for="fs">Subject</label><input class="fi" type="text" placeholder="Project inquiry, job opportunity…" id="fs" name="subject"/></div>
+        <div class="fg w2"><label class="flbl" for="fm">Message</label><textarea class="fta" placeholder="Describe your project or opportunity…" id="fm" name="message" rows="4" required></textarea></div>
+        <button class="fsub" type="submit">Send Message →</button>
+        <div class="fmsg" id="fmsg" role="status" aria-live="polite"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -2198,343 +2338,326 @@ footer{padding:1.6rem 2.5rem;background:var(--bg);border-top:1px solid var(--bdr
 <script>
 (function(){
   'use strict';
+  /* Written in plain ES5 so the site still works on older phones and feature-phone browsers. */
+  var root = document.documentElement;
+  var body = document.body;
+  function mq(q){ return window.matchMedia ? window.matchMedia(q) : {matches:false}; }
+  function onChange(m, fn){ if(m.addEventListener) m.addEventListener('change', fn); else if(m.addListener) m.addListener(fn); }
+  function toArray(list){ return Array.prototype.slice.call(list); }
+  var reduceMotion = mq('(prefers-reduced-motion: reduce)').matches;
+  var hasIO = 'IntersectionObserver' in window;
 
-  /* ── custom cursor ── */
-  const dot  = document.getElementById('dot');
-  const ring = document.getElementById('ring');
-  let mx=-300,my=-300,rx=-300,ry=-300,cursorActive=false;
-  // Keep off-screen until first actual mouse movement
-  dot.style.opacity='0'; ring.style.opacity='0';
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX; my=e.clientY;
-    if(!cursorActive){
-      cursorActive=true;
-      dot.style.opacity='1'; ring.style.opacity='1';
-    }
-  });
-  (function tick(){
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(tick);
-  })();
-  // Hide cursors when mouse leaves window
-  document.addEventListener('mouseleave',()=>{ dot.style.opacity='0'; ring.style.opacity='0'; cursorActive=false; });
-  document.addEventListener('mouseenter',()=>{ if(cursorActive){ dot.style.opacity='1'; ring.style.opacity='1'; }});
-  document.querySelectorAll('a,button,.bcard,.srv,.pcard,.tcard,.ecard,.clicard,.mbadge,.clink,.stag').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-  });
+  /* ── keep CSS --nav-h equal to the real height of the fixed nav ── */
+  var navEl = document.getElementById('nav');
+  function syncNavH(){
+    if(!navEl) return;
+    var h = Math.round(navEl.getBoundingClientRect().height);
+    if(h) root.style.setProperty('--nav-h', h + 'px');
+  }
+  syncNavH();
+  window.addEventListener('resize', syncNavH);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(syncNavH);
 
-  /* ── nav scroll (just the background) ── */
-  const navEl = document.getElementById('nav');
-  window.addEventListener('scroll',()=>{ navEl.classList.toggle('on',window.scrollY>40); },{passive:true});
-  navEl.classList.add('on');
-
-  /* ── SPA PAGE ROUTER ── */
-  const ALL_GROUPS = ['about','services','projects','experience','training','clients','contact'];
-  let currentPage = 'hero';
-
-  function showPage(group, anchor){
-    // Hide hero
-    document.getElementById('hero').classList.toggle('spa-hidden', group!=='hero');
-    // Hide/show group sections
-    document.querySelectorAll('[data-spa-group]').forEach(s=>{
-      const g = s.dataset.spaGroup;
-      const show = g === group;
-      s.classList.toggle('spa-hidden', !show);
-      if(show) s.classList.add('spa-in');
-      else s.classList.remove('spa-in');
-    });
-    // Show/hide breadcrumb
-    document.querySelectorAll('[data-spa-crumb]').forEach(bc=>{
-      bc.classList.toggle('spa-hidden', bc.dataset.spaCrumb !== group);
-    });
-    // Update nav active
-    document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{
-      a.classList.toggle('active', a.dataset.page === group);
-    });
-    // Scroll to top, or to anchor within page
-    window.scrollTo(0,0);
-    if(anchor){
-      setTimeout(()=>{
-        const el = document.getElementById(anchor);
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-      }, 80);
-    }
-    currentPage = group;
-    // Update hash silently
-    if(window.self===window.top){try{history.replaceState(null,'',group==='hero'?location.pathname:'#'+group);}catch(e){}}
+  /* ── nav background ── */
+  if(navEl){
+    window.addEventListener('scroll', function(){ navEl.classList.toggle('on', window.pageYOffset > 40); }, {passive:true});
+    navEl.classList.add('on');
   }
 
-  // Initialize: all groups hidden, hero visible
-  document.querySelectorAll('[data-spa-group]').forEach(s=>s.classList.add('spa-hidden'));
-  document.querySelectorAll('[data-spa-crumb]').forEach(bc=>bc.classList.add('spa-hidden'));
+  /* ── custom cursor: only for a real mouse (it sat stuck in the corner on phones and tablets) ── */
+  var dot = document.getElementById('dot'), ring = document.getElementById('ring');
+  if(dot && ring && mq('(hover: hover) and (pointer: fine)').matches){
+    root.classList.add('has-cursor');
+    var mx = 0, my = 0, rx = 0, ry = 0, raf = 0, shown = false;
+    var place = function(el, x, y){ el.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)'; };
+    var loop = function(){
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      place(dot, mx, my); place(ring, rx, ry);
+      raf = (Math.abs(mx - rx) > 0.4 || Math.abs(my - ry) > 0.4) ? requestAnimationFrame(loop) : 0;
+    };
+    document.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      if(!shown){ shown = true; rx = mx; ry = my; root.classList.add('cursor-on'); }
+      if(reduceMotion){ rx = mx; ry = my; }
+      if(!raf) raf = requestAnimationFrame(loop);
+    }, {passive:true});
+    document.addEventListener('mouseout', function(e){
+      if(!e.relatedTarget){ shown = false; root.classList.remove('cursor-on'); }
+    });
+    var HOVER_SEL = 'a,button,.bcard,.srv,.pcard,.tcard,.ecard,.clicard,.mbadge,.clink,.stag';
+    document.addEventListener('mouseover', function(e){
+      var t = e.target;
+      body.classList.toggle('hovering', !!(t && t.closest && t.closest(HOVER_SEL)));
+    }, {passive:true});
+  }
 
-  // Handle deep links via hash on load
-  let initHash=''; if(window.self===window.top){try{initHash=location.hash.replace('#','');}catch(e){}}
-  if(initHash && (ALL_GROUPS.includes(initHash) || document.getElementById(initHash))){
-    if(ALL_GROUPS.includes(initHash)){
-      showPage(initHash);
-    } else {
-      // find group of this anchor's parent section
-      const el = document.getElementById(initHash);
-      if(el){
-        const parentSec = el.closest('[data-spa-group]');
-        showPage(parentSec ? parentSec.dataset.spaGroup : 'projects', initHash);
+  /* ── hamburger menu ── */
+  var hamburger = document.getElementById('navHamburger');
+  var navLinks  = document.getElementById('navLinks');
+  function setMenu(open){
+    if(!hamburger || !navLinks) return;
+    hamburger.classList.toggle('open', open);
+    navLinks.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamburger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    root.classList.toggle('menu-open', open);
+  }
+  if(hamburger && navLinks){
+    hamburger.addEventListener('click', function(){ setMenu(!navLinks.classList.contains('open')); });
+    document.addEventListener('keydown', function(e){
+      if((e.key === 'Escape' || e.key === 'Esc') && navLinks.classList.contains('open')){ setMenu(false); hamburger.focus(); }
+    });
+    // Rotating/resizing to a wide layout with the menu open used to leave the page unscrollable
+    onChange(mq('(max-width: 900px)'), function(e){ if(!e.matches) setMenu(false); });
+  }
+
+  /* ── project filter ── */
+  var cards = toArray(document.querySelectorAll('#projects .pcard'));
+  var filterBtns = toArray(document.querySelectorAll('.fb'));
+  function applyFilter(f){
+    filterBtns.forEach(function(b){
+      var on = b.getAttribute('data-f') === f;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    cards.forEach(function(card){
+      var cats = (card.getAttribute('data-cat') || '').split(/\s+/);
+      var show = f === 'all' || cats.indexOf(f) >= 0;
+      clearTimeout(card._hideTimer);
+      if(show){
+        var wasHidden = card.hidden;
+        card.hidden = false;
+        if(wasHidden && !reduceMotion){
+          card.style.opacity = '0';
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){ card.style.opacity = '1'; }); });
+        } else {
+          card.style.opacity = '1';
+        }
+      } else if(!card.hidden){
+        card.style.opacity = '0';
+        // hidden = display:none, so the grid closes up cleanly (no absolutely-positioned leftovers)
+        card._hideTimer = setTimeout(function(){ card.hidden = true; }, reduceMotion ? 0 : 280);
       }
+    });
+  }
+  filterBtns.forEach(function(b){
+    b.addEventListener('click', function(){ applyFilter(b.getAttribute('data-f')); });
+  });
+  function ensureVisible(id){
+    var el = document.getElementById(id);
+    if(el && el.classList.contains('pcard') && el.hidden) applyFilter('all');
+  }
+
+  /* ── SPA page router (with working Back/Forward buttons) ── */
+  var GROUPS = ['about','services','projects','experience','training','clients','contact'];
+  var TITLES = {about:'About', services:'Services', projects:'Projects & Case Studies', experience:'Experience',
+                training:'Training & Certifications', clients:'Clients', contact:'Contact'};
+  var BASE_TITLE = document.title;
+  var hero = document.getElementById('hero');
+  var groupEls = toArray(document.querySelectorAll('[data-spa-group]'));
+  var crumbEls = toArray(document.querySelectorAll('[data-spa-crumb]'));
+  var navPageLinks = toArray(document.querySelectorAll('.nav-links a[data-page]'));
+  var canHistory = false;
+  try { canHistory = window.self === window.top && !!(window.history && history.pushState); } catch(e){}
+  var current = {page:null, anchor:null};
+
+  function render(group){
+    if(hero) hero.classList.toggle('spa-hidden', group !== 'hero');
+    groupEls.forEach(function(s){
+      var show = s.getAttribute('data-spa-group') === group;
+      s.classList.toggle('spa-hidden', !show);
+      s.classList.toggle('spa-in', show);
+    });
+    crumbEls.forEach(function(bc){ bc.classList.toggle('spa-hidden', bc.getAttribute('data-spa-crumb') !== group); });
+    navPageLinks.forEach(function(a){
+      var on = a.getAttribute('data-page') === group;
+      a.classList.toggle('active', on);
+      if(on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    document.title = group === 'hero' ? BASE_TITLE : TITLES[group] + ' — Caleb Akwesera Ndiwa';
+  }
+
+  function scrollToAnchor(id){
+    var el = id ? document.getElementById(id) : null;
+    if(!el) return false;
+    ensureVisible(id);
+    requestAnimationFrame(function(){
+      try { el.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'start'}); }
+      catch(e){ el.scrollIntoView(true); }
+    });
+    return true;
+  }
+
+  // mode: 'push' (link click), 'replace', or null (Back/Forward — the browser already moved)
+  function showPage(group, anchor, mode){
+    if(group !== 'hero' && GROUPS.indexOf(group) < 0) group = 'hero';
+    anchor = anchor || null;
+    if(current.page !== group) render(group);
+    current = {page:group, anchor:anchor};
+    if(!scrollToAnchor(anchor)) window.scrollTo(0, 0);
+    if(canHistory && mode){
+      var url = group === 'hero' ? location.pathname + location.search : '#' + (anchor || group);
+      try { history[mode === 'push' ? 'pushState' : 'replaceState']({page:group, anchor:anchor}, '', url); } catch(e){}
     }
   }
 
-  // Nav link clicks
-  document.querySelectorAll('[data-page]').forEach(el=>{
-    el.addEventListener('click', e=>{
-      e.preventDefault();
-      showPage(el.dataset.page);
-      // Close hamburger
-      const hb = document.getElementById('navHamburger');
-      const nl = document.getElementById('navLinks');
-      if(hb && nl){ hb.classList.remove('open'); nl.classList.remove('open'); hb.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
-    });
+  function resolve(hash){
+    try { hash = decodeURIComponent((hash || '').replace(/^#/, '')); } catch(e){ return null; }
+    if(!hash || hash === 'hero' || hash === 'top') return {page:'hero', anchor:null};
+    if(GROUPS.indexOf(hash) >= 0) return {page:hash, anchor:null};
+    var el = document.getElementById(hash);
+    if(!el) return null;
+    if(hero && (el === hero || hero.contains(el))) return {page:'hero', anchor:null};
+    var sec = el.closest ? el.closest('[data-spa-group]') : null;
+    return sec ? {page:sec.getAttribute('data-spa-group'), anchor:hash} : null; // e.g. #main-content (skip link): stay put
+  }
+
+  // Start: deep links like #projects or #proj-thwake open the right page
+  var initial = null;
+  try { if(window.self === window.top) initial = resolve(location.hash); } catch(e){}
+  if(initial && initial.page !== 'hero'){
+    showPage(initial.page, initial.anchor, null);
+  } else {
+    render('hero');
+    current = {page:'hero', anchor:null};
+  }
+  if(canHistory){
+    try { history.replaceState({page:current.page, anchor:current.anchor}, '', location.href); } catch(e){}
+  }
+
+  window.addEventListener('popstate', function(e){
+    var st = (e.state && e.state.page) ? e.state : resolve(location.hash);
+    if(st) showPage(st.page, st.anchor, null);
+  });
+  window.addEventListener('hashchange', function(){
+    var r = resolve(location.hash);
+    if(r && (r.page !== current.page || r.anchor !== current.anchor)) showPage(r.page, r.anchor, null);
   });
 
-  // Links with data-anchor (e.g. from experience → specific project card)
-  document.querySelectorAll('[data-anchor]').forEach(el=>{
-    el.addEventListener('click', e=>{
-      e.preventDefault();
-      const anchor = el.dataset.anchor;
-      const targetPage = el.dataset.page || 'projects';
-      showPage(targetPage, anchor);
-    });
+  // One delegated handler for every [data-page] link (nav, logo, buttons, breadcrumbs, "Full case study" links)
+  document.addEventListener('click', function(e){
+    var t = e.target && e.target.closest ? e.target.closest('[data-page]') : null;
+    if(!t) return;
+    // let Ctrl/Cmd/Shift/middle-click open the link in a new tab — the hrefs are real fragments now
+    if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    setMenu(false);
+    var page = t.getAttribute('data-page');
+    var anchor = t.getAttribute('data-anchor') || null;
+    var same = current.page === page && current.anchor === anchor;
+    showPage(page, anchor, same ? 'replace' : 'push');
   });
 
-  /* ── animated counter ── */
+  /* ── scroll-triggered reveals (everything simply shows if the browser lacks IntersectionObserver) ── */
+  function onVisible(els, opts, fn){
+    els = toArray(els);
+    if(!hasIO){ els.forEach(function(el){ fn(el, 0); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      var n = 0;
+      entries.forEach(function(en){
+        if(en.isIntersecting){ io.unobserve(en.target); fn(en.target, n++); }
+      });
+    }, opts);
+    els.forEach(function(el){ io.observe(el); });
+  }
+
+  // animated counters
   function runCounter(el){
-    if(el._counted)return; el._counted=true;
-    const target=parseInt(el.dataset.count,10);
-    const suffix=el.dataset.suffix||'';
-    const dur=1600; let start=null;
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduceMotion){ el.textContent = target + suffix; return; }
+    var start = null, dur = 1600;
     function step(ts){
-      if(!start)start=ts;
-      const p=Math.min((ts-start)/dur,1);
-      const ease=1-Math.pow(1-p,3);
-      // Always show suffix so layout is stable; show progressive number
-      el.textContent=Math.round(ease*target)+suffix;
-      if(p<1)requestAnimationFrame(step);
+      if(start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
+      if(p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
-  // Use a generous rootMargin so counter fires before element is fully in view
-  const counterIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        runCounter(e.target);
-        counterIO.unobserve(e.target);
-      }
-    });
-  },{threshold:0,rootMargin:'0px 0px 60px 0px'});
-  document.querySelectorAll('[data-count]').forEach(el=>{
-    // Reset to '0+' so layout is stable before animation
-    el.textContent='0'+(el.dataset.suffix||'');
-    counterIO.observe(el);
+  var counters = document.querySelectorAll('[data-count]');
+  toArray(counters).forEach(function(el){ el.textContent = '0' + (el.getAttribute('data-suffix') || ''); });
+  onVisible(counters, {threshold:0, rootMargin:'0px 0px 60px 0px'}, runCounter);
+
+  // skill bars
+  onVisible(document.querySelectorAll('.sk-fill'), {threshold:0.05}, function(el){
+    el.style.width = el.getAttribute('data-w') + '%';
   });
 
-  /* ── skill bars ── */
-  const skillIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting&&!e.target._filled){
-        e.target._filled=true;
-        e.target.style.width=e.target.dataset.w+'%';
-        skillIO.unobserve(e.target);
-      }
-    });
-  },{threshold:0.05});
-  document.querySelectorAll('.sk-fill').forEach(el=>skillIO.observe(el));
-
-  /* ── timeline reveal (fixed: use data-index for delay) ── */
-  document.querySelectorAll('.ti').forEach((el,i)=>el.dataset.tlIdx=i);
-  const tlIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const delay=parseInt(e.target.dataset.tlIdx||0)*60;
-        setTimeout(()=>e.target.classList.add('show'),delay);
-        tlIO.unobserve(e.target);
-      }
-    });
-  },{threshold:0.05});
-  document.querySelectorAll('.ti').forEach(el=>tlIO.observe(el));
-
-  /* ── project cards reveal ── */
-  // Assign stable index for animation delay
-  document.querySelectorAll('.pcard').forEach((el,i)=>{
-    el.dataset.cardIdx=i;
-    el.style.opacity='0';
-    el.style.transition='opacity .45s ease, border-color .25s, transform .25s';
+  // timeline items (staggered only within the batch that becomes visible together)
+  onVisible(document.querySelectorAll('.ti'), {threshold:0.05}, function(el, i){
+    setTimeout(function(){ el.classList.add('show'); }, reduceMotion ? 0 : Math.min(i, 6) * 60);
   });
-  const cardIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting && e.target.style.visibility!=='hidden'){
-        const d=parseInt(e.target.dataset.cardIdx||0)*55;
-        setTimeout(()=>{e.target.style.opacity='1';},d);
-        cardIO.unobserve(e.target);
-      }
-    });
-  },{threshold:0.05});
-  document.querySelectorAll('.pcard').forEach(el=>cardIO.observe(el));
 
-  /* ── project filter (fixed: multi-cat match, visibility-based, race-condition-free) ── */
-  (function(){
-    const cards = Array.from(document.querySelectorAll('.pcard'));
-    let activeFilter = 'all';
-
-    // Preserve original grid-column span for each card
-    cards.forEach(card => {
-      card._spanStyle = card.style.gridColumn || '';
-    });
-
-    function applyFilter(filter){
-      activeFilter = filter;
-      cards.forEach(card => {
-        const cats = (card.dataset.cat || '').split(' ');
-        const show = filter === 'all' || cats.includes(filter);
-
-        if(show){
-          // ── BUG FIX: cancel any pending hide timer for this card ──
-          if(card._hideTimer){ clearTimeout(card._hideTimer); card._hideTimer = null; }
-          // Restore display first so transition can play
-          card.style.visibility = '';
-          card.style.position = '';
-          card.style.pointerEvents = '';
-          card.style.gridColumn = card._spanStyle;
-          // Tick delay so browser paints display before opacity
-          requestAnimationFrame(() => requestAnimationFrame(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }));
-        } else {
-          // ── BUG FIX: cancel previous hide timer before setting a new one ──
-          if(card._hideTimer){ clearTimeout(card._hideTimer); card._hideTimer = null; }
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(6px)';
-          // After fade, collapse out of grid flow
-          const tid = setTimeout(() => {
-            // Only collapse if this card is still hidden under the *current* active filter
-            const stillHidden = activeFilter !== 'all' && !(card.dataset.cat||'').split(' ').includes(activeFilter);
-            if(stillHidden){
-              card.style.visibility = 'hidden';
-              card.style.position = 'absolute';
-              card.style.pointerEvents = 'none';
-              card.style.gridColumn = '';
-            }
-          }, 360);
-          card._hideTimer = tid;
-        }
-      });
-    }
-
-    document.querySelectorAll('.fb').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.fb').forEach(b => {
-          b.classList.remove('on');
-          b.setAttribute('aria-pressed','false');
-        });
-        btn.classList.add('on');
-        btn.setAttribute('aria-pressed','true');
-        applyFilter(btn.dataset.f);
-      });
-    });
-  })();
-
-  /* ── contact form ── */
-  // ── Formspree contact form ──────────────────────────────────────
-  // Replace YOUR_FORM_ID with the ID from formspree.io/forms after signing up
-  const FORMSPREE_ID = 'YOUR_FORM_ID';
-
-  window.doSend = async function(){
-    const n   = document.getElementById('fn').value.trim();
-    const e   = document.getElementById('fe').value.trim();
-    const s   = document.getElementById('fs').value.trim();
-    const m   = document.getElementById('fm').value.trim();
-    const msg = document.getElementById('fmsg');
-    const btn = document.querySelector('.fsub');
-
-    if(!n||!e||!m){
-      msg.style.color='#e06b5a';
-      msg.textContent='Please fill in your name, email, and message.';
-      return;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){
-      msg.style.color='#e06b5a';
-      msg.textContent='Please enter a valid email address.';
-      return;
-    }
-
-    // If Formspree not yet configured, fall back gracefully
-    if(FORMSPREE_ID === 'mzdjzrbq'){
-      msg.style.color='var(--amber)';
-      msg.textContent='Contact form not yet configured — please email calebakwe@gmail.com directly.';
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    msg.style.color = 'var(--dim)';
-    msg.textContent = '';
-
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ name: n, email: e, subject: s||'Portfolio Enquiry', message: m })
-      });
-      if(res.ok){
-        msg.style.color = 'var(--accent)';
-        msg.textContent = '✓ Message sent — Caleb will reply within 24 hours.';
-        ['fn','fe','fs','fm'].forEach(id => document.getElementById(id).value='');
-        btn.textContent = 'Sent ✓';
-      } else {
-        const data = await res.json();
-        msg.style.color = '#e06b5a';
-        msg.textContent = (data.errors||[]).map(e=>e.message).join(', ') || 'Failed to send. Please email directly.';
-        btn.disabled = false;
-        btn.textContent = 'Send Message →';
-      }
-    } catch(err){
-      msg.style.color = '#e06b5a';
-      msg.textContent = 'Network error — please email calebakwe@gmail.com directly.';
-      btn.disabled = false;
-      btn.textContent = 'Send Message →';
-    }
-  };
-
-
-  /* ── hamburger menu ── */
-  const hamburger = document.getElementById('navHamburger');
-  const navLinks  = document.getElementById('navLinks');
-  if(hamburger && navLinks){
-    hamburger.addEventListener('click', () => {
-      const open = hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+  // project cards fade in
+  if(hasIO && !reduceMotion){
+    cards.forEach(function(el){ el.style.opacity = '0'; });
+    onVisible(cards, {threshold:0.05}, function(el, i){
+      setTimeout(function(){ if(!el.hidden) el.style.opacity = '1'; }, Math.min(i, 4) * 55);
     });
   }
 
-  /* ── WB demand bar animation on scroll ── */
-  const wbBarIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.wb-bar-fill').forEach(bar=>{
-          const w=bar.style.width;
-          bar.style.width='0';
-          setTimeout(()=>{bar.style.transition='width 1.4s cubic-bezier(.22,.61,.36,1)';bar.style.width=w;},100);
-        });
-        wbBarIO.unobserve(e.target);
-      }
+  // World Bank demand bar
+  onVisible(document.querySelectorAll('.wb-card'), {threshold:0.2}, function(card){
+    toArray(card.querySelectorAll('.wb-bar-fill')).forEach(function(bar){
+      if(reduceMotion) return;
+      var w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(function(){ bar.style.transition = 'width 1.4s cubic-bezier(.22,.61,.36,1)'; bar.style.width = w; }, 100);
     });
-  },{threshold:0.2});
-  document.querySelectorAll('.wb-card').forEach(el=>wbBarIO.observe(el));
+  });
 
+  /* ── contact form (Formspree, with an email fallback) ── */
+  var FORMSPREE_ID = 'mzdjzrbq'; // formspree.io/f/<id>
+  var CONTACT_EMAIL = 'calebakwe@gmail.com';
+  var form = document.getElementById('contactForm');
+  function val(id){ var el = document.getElementById(id); return el ? el.value.replace(/^\s+|\s+$/g, '') : ''; }
+  function sendContact(){
+    var n = val('fn'), em = val('fe'), s = val('fs'), m = val('fm');
+    var msg = document.getElementById('fmsg');
+    var btn = form ? form.querySelector('.fsub') : document.querySelector('.fsub');
+    function say(text, color){ if(msg){ msg.style.color = color; msg.textContent = text; } }
+    function resetBtn(){ if(btn){ btn.disabled = false; btn.textContent = 'Send Message →'; } }
+
+    if(!n || !em || !m){ say('Please fill in your name, email, and message.', '#e06b5a'); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ say('Please enter a valid email address.', '#e06b5a'); return; }
+
+    var mailto = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(s || 'Portfolio Enquiry') +
+                 '&body=' + encodeURIComponent(m + '\n\n— ' + n + ' (' + em + ')');
+    // Not configured, or a browser without fetch: hand over to the visitor's email app instead of failing
+    if(!FORMSPREE_ID || FORMSPREE_ID === 'YOUR_FORM_ID' || !window.fetch){
+      say('Opening your email app… If nothing happens, email ' + CONTACT_EMAIL + ' directly.', 'var(--amber)');
+      window.location.href = mailto;
+      return;
+    }
+
+    if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+    say('', 'var(--dim)');
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({name: n, email: em, _replyto: em, subject: s || 'Portfolio Enquiry', message: m})
+    }).then(function(res){
+      if(res.ok){
+        say('✓ Message sent — Caleb will reply within 24 hours.', 'var(--accent)');
+        ['fn','fe','fs','fm'].forEach(function(id){ var el = document.getElementById(id); if(el) el.value = ''; });
+        if(btn) btn.textContent = 'Sent ✓';
+        return;
+      }
+      return res.json().catch(function(){ return {}; }).then(function(data){
+        var errs = (data && data.errors) ? data.errors.map(function(x){ return x.message; }).join(', ') : '';
+        say(errs || ('Could not send right now. Please email ' + CONTACT_EMAIL + ' directly.'), '#e06b5a');
+        resetBtn();
+      });
+    })['catch'](function(){
+      say('Network error — please email ' + CONTACT_EMAIL + ' directly.', '#e06b5a');
+      resetBtn();
+    });
+  }
+  window.doSend = sendContact;
+  if(form){
+    form.addEventListener('submit', function(e){ e.preventDefault(); sendContact(); });
+  }
 })();
 </script>
 </main>
