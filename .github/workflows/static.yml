@@ -31,6 +31,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: List logo files
+        # The page reads assets/logos/manifest.json to know which logos exist (see assets/logos/README.md).
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          folder = 'assets/logos'
+          image = re.compile(r'\.(svg|webp|png|avif|jpe?g|gif)$', re.I)
+          files = sorted(f for f in os.listdir(folder) if image.search(f)) if os.path.isdir(folder) else []
+          os.makedirs(folder, exist_ok=True)
+          with open(os.path.join(folder, 'manifest.json'), 'w') as fh:
+              json.dump({'files': files}, fh)
+          print(f'{len(files)} logo file(s):', ', '.join(files) or 'none yet')
+          PY
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
