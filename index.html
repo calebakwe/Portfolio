@@ -284,11 +284,12 @@ h1.hero-name .line3 em{font-family:'Instrument Serif',serif;font-style:italic;co
    Each .org-logos box names the logos it can show in data-logos; the script adds a white chip
    for every file it finds. A box with a .logo-fb child shows that until a logo loads; a box
    without one stays hidden while it is empty. */
-.org-logos{--lh:30px;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;}
+.org-logos{--lh:34px;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;}
 .org-logos:empty{display:none;}
 .org-logos.has-logo>.logo-fb{display:none;}
-.logo-chip{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;height:var(--lh);min-width:var(--lh);padding:0 calc(var(--lh)*.26);background:#fff;border-radius:calc(var(--lh)*.2);}
-.logo-chip img{display:block;height:calc(var(--lh)*.68);width:auto;max-width:calc(var(--lh)*3.4);object-fit:contain;}
+.logo-chip{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;height:var(--lh);min-width:var(--lh);padding:0 calc(var(--lh)*.22);background:#fff;border-radius:calc(var(--lh)*.2);}
+.logo-chip img{display:block;height:calc(var(--lh)*.76);width:auto;max-width:calc(var(--lh)*3.4);object-fit:contain;}
+.logo-chip.on-dark{background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);}
 .cli-logos,.t-logos{--lh:44px;}
 .reg-logos{--lh:40px;flex-wrap:nowrap;flex-shrink:0;}
 .reg-logos .logo-chip img{max-width:calc(var(--lh)*2.2);}
@@ -2595,14 +2596,18 @@ html.menu-open,html.menu-open body{overflow:hidden;}
         var m = NAME.exec(n || '');
         if(!m) return;
         var key = m[1].toLowerCase().replace(/[\s_]+/g, '-'), ext = m[2].toLowerCase();
-        if(!files[key] || PREFER[ext] < PREFER[files[key].ext]) files[key] = {name: n, ext: ext};
+        // "<name>-on-dark" marks a white (reversed) logo; it gets a dark tile, and a normal file wins over it
+        var dark = /-on-dark$/.test(key);
+        if(dark) key = key.slice(0, -8);
+        var rank = PREFER[ext] + (dark ? 10 : 0);
+        if(!files[key] || rank < files[key].rank) files[key] = {name: n, rank: rank, dark: dark};
       });
       boxes.forEach(function(box){
         box.getAttribute('data-logos').split(/\s+/).forEach(function(key){
           if(!files[key]) return;
           var chip = document.createElement('span');
           var img = document.createElement('img');
-          chip.className = 'logo-chip';
+          chip.className = 'logo-chip' + (files[key].dark ? ' on-dark' : '');
           img.alt = '';
           img.setAttribute('loading', 'lazy');
           img.setAttribute('decoding', 'async');

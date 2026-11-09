@@ -14,6 +14,7 @@ To remove a logo, delete its file the same way.
 
 - **Format:** `.svg` is best. A `.png` or `.webp` with a transparent background, at least 120 px tall, also works. A `.jpg` is fine if the logo sits on white.
 - **Colour version:** use the full-colour logo made for **white** backgrounds. Each logo is shown on a small white tile, so an all-white logo would be invisible.
+- **White-only logos:** if the only version you have is white (made for dark backgrounds), add `-on-dark` to its name, e.g. `welle-on-dark.png`. It is then shown on a dark tile instead. A normal version, if you add one later, takes its place.
 - **Name:** the name before the extension must match the list, e.g. `world-bank.png`. If both `world-bank.svg` and `world-bank.png` exist, the `.svg` is used.
 - **Shape:** wide logos and square emblems both fit. Very long wordmarks are shrunk to fit their tile.
 
